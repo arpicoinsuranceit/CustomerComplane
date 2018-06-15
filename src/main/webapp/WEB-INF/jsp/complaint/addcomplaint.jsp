@@ -28,12 +28,117 @@
 </head>
 <body onload="loadCategory()">
 	<div class="wrapper">
+	<!-- sidebar start -->
+	<div class="sidebar" data-color="ar-orange"
+			data-background-color="white"
+			data-image="../assets/img/sidebar-1.jpg">
+
+	<div class="logo">
+				<a href="http://www.arpicoinsurance.com/"
+					class="simple-text logo-normal"><img src="assets/img/logo.png"
+					style="width: 75%; height: 100px;" alt="ARPICO INSURANCE"></a>
+			</div>
+			<div class="sidebar-wrapper">
+				<ul class="nav">
+					<li class="nav-item"><a class="nav-link"
+						href="/home"> <i class="material-icons">dashboard</i>
+							<p>Dashboard</p>
+					</a></li>
+					<li class="nav-item active">
+						<a class="nav-link" href="/complaint"> 
+							<i class="material-icons">content_paste</i>
+							<p>Customer Complaints</p>
+						</a>
+					</li>
+					<li class="nav-item "><a class="nav-link"
+						href="../examples/typography.html"> <i class="material-icons">library_books</i>
+							<p>Reports</p>
+					</a></li>
+					<li class="nav-item "><a class="nav-link"
+						href="../examples/notifications.html"> <i
+							class="material-icons">notifications</i>
+							<p>Notifications</p>
+					</a></li>
+					<li class="nav-item "><a class="nav-link"
+						href="../examples/user.html"> <i class="material-icons">person</i>
+							<p>User Profile</p>
+					</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- sidebar end -->
 		
-		<jsp:include page="../core/sidebar.jsp" ></jsp:include>
+		
 		
 		<div class="main-panel">
+		
+		<!-- nav bar start -->
+		
+		<nav
+				class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-wrapper">
+					<a class="navbar-brand" href="/complaint">Customer Complaints</a>
+				</div>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navigation" aria-controls="navigation-index"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="navbar-toggler-icon icon-bar"></span> <span
+						class="navbar-toggler-icon icon-bar"></span> <span
+						class="navbar-toggler-icon icon-bar"></span>
+				</button>
+				<div class="collapse navbar-collapse justify-content-end"
+					id="navigation">
+					<form class="navbar-form">
+						<div class="input-group no-border">
+							<input type="text" value="" class="form-control"
+								placeholder="Search...">
+							<button type="submit"
+								class="btn btn-white btn-round btn-just-icon">
+								<i class="material-icons">search</i>
+								<div class="ripple-container"></div>
+							</button>
+						</div>
+					</form>
+					<ul class="navbar-nav">
+						<li class="nav-item"><a class="nav-link" href="#pablo"> <i
+								class="material-icons">dashboard</i>
+								<p>
+									<span class="d-lg-none d-md-block">Stats</span>
+								</p>
+						</a></li>
+						<li class="nav-item dropdown"><a class="nav-link"
+							href="http://example.com" id="navbarDropdownMenuLink"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="material-icons">notifications</i> <span
+								class="notification">5</span>
+								<p>
+									<span class="d-lg-none d-md-block">Some Actions</span>
+								</p>
+						</a>
+							<div class="dropdown-menu dropdown-menu-right"
+								aria-labelledby="navbarDropdownMenuLink">
+								<a class="dropdown-item" href="#">Mike John responded to
+									your email</a> <a class="dropdown-item" href="#">You have 5 new
+									tasks</a> <a class="dropdown-item" href="#">You're now friend
+									with Andrew</a> <a class="dropdown-item" href="#">Another
+									Notification</a> <a class="dropdown-item" href="#">Another One</a>
+							</div></li>
+						<li class="nav-item"><a class="nav-link" href=""> <i
+								class="material-icons">person</i>
+								<p>
+									<span class="d-lg-none d-md-block">Account</span>
+								</p>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+			</nav>
 			
-		<jsp:include page="../core/navbar.jsp"></jsp:include>
+			<!-- nav bar end -->
+			
+		
 		
 			<div class="content">
                 <div class="container-fluid">
@@ -41,7 +146,7 @@
                         <div class="col-md-12">
                             <div class="card">
                                 <div class="card-header card-header-pri" style="background-color: #224099;opacity: 0.8;">
-                                    <h3 class="card-title">ADD COMPLAINT</h3>
+                                    <h3 class="card-title">Add Complaint</h3>
                                 </div>
                                 <div class="card-body">
                                     <form name="add_complaint_form" id="add_complaint_form" enctype='multipart/form-data'>
@@ -138,28 +243,43 @@
 
 	<script>
 	
+		var fileArr=[];
+		
 		$("input[name=attachment]").change(function (e) {
 		    if (this.files && this.files[0]) {
 		        
 		        var files = e.target.files,
 		        filesLength = files.length;
-		      for (var i = 0; i < filesLength; i++) {
+		      	for (var i = 0; i < filesLength; i++) {
 		    	  
 		        var f = files[i];
+		        
+	        	for (var j in fileArr){
+	        		if(f.name == fileArr[j].name){
+	        			alert("Already Exist.");
+	        			return;
+	        		}
+	        	}
+	        	
+		        fileArr.push(f);
 		        console.log(f);
+		        
 		        var fileReader = new FileReader();
 		        
 		        fileReader.onload = (function(e) {
 		          var file = e.target;
-		          console.log(file);
-		          $("<span class=\"pip\" style=\"display: inline-block;\" >" +
-		            "<img class=\"imageThumb\" style=\"width:100px;height:100px;padding:5px;\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-		            "<br/><span class=\"remove\" style=\"display: block;margin:5px;text-align: center;background-color: #224099;color: white;\">Remove</span>" +
+		         console.log(file);
+		          $("<span class=\"pip\" style=\"display: inline-block;\" id=\""+f.name+"\">" +
+		            "<img class=\"imageThumb\" style=\"width:100px;height:100px;padding:5px;\" src=\"" + e.target.result + "\" title=\"" + f.name + "\"/>" +
+		            "<br/><span class=\"remove\" onclick=\"removeImage('"+f.name+"')\" style=\"display: block;margin:5px;text-align: center;background-color: #224099;color: white;\">Remove</span>" +
 		            "</span>").appendTo(".upload-image-preview");
 		          
-		          $(".remove").click(function(){
+		          /*$(".remove").click(function(){
 		            $(this).parent(".pip").remove();
-		          });
+		            console.log(f);
+		            console.log(fileArr.indexOf(f));
+		            fileArr.splice(fileArr.indexOf(f),1);
+		          });*/
 		          
 		        });
 		        
@@ -167,6 +287,18 @@
 		      }
 		    }
 		});
+		
+		function removeImage(name){
+			alert(name);
+			for (var j in fileArr){
+        		if(name == fileArr[j].name){
+        			document.getElementById(name).setAttribute('style', 'display: none');
+        			fileArr.splice(j,1);
+        			
+        			return;
+        		}
+        	}
+		}
 		
 		
 		function loadCategory(){
@@ -187,13 +319,22 @@
 		
 		
 		function sendComplaint(){
-			alert("called send complaint..");
-			//console.log($("#attachment").file.files[0]);
-			
 			var formData = new FormData($('#add_complaint_form')[0]);
-			formData.append('attachment', $('input[type=file]')[0].files[0]); 
 			
-			console.log($('input[type=file]')[0].files[0]);
+			var count = 0;
+			
+			formData.delete("attachment");
+			$.each(fileArr, function(i, file){
+				console.log(i);
+				formData.append("attachment",file);
+			    count++;
+			})
+			
+			console.log(fileArr);
+			
+			for (var pair of formData.entries()) {
+			    console.log(pair[0]+ ', ' + pair[1]); 
+			}
 			
 			$.ajax({
 				type : "POST",
@@ -204,7 +345,14 @@
 				contentType: false,
 				cache: false,
 				success : function(result) {
-					alert(result);
+					
+					if(result == 200){
+						alert("Success");
+						$('#add_complaint_form')[0].reset();
+					}else{
+						alert("Fail to send");
+					}
+					
 				},
 				error : function(result) {
 					alert(result);

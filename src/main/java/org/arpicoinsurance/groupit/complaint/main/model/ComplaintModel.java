@@ -1,6 +1,7 @@
 package org.arpicoinsurance.groupit.complaint.main.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +24,10 @@ public class ComplaintModel {
 	private String complaintAction;
 	private String complaintStatus;
 	private String complaintType;
+	private Date acknowledgementDate;
+	private Date createDate;
+	private Date updateDate;
+	
 	
 	@Column(name="customer",nullable=false)
 	private CustomerModel customer;
@@ -104,15 +109,33 @@ public class ComplaintModel {
 	public void setComplaintsDetails(List<ComplaintStageDetailsModel> complaintsDetails) {
 		this.complaintsDetails = complaintsDetails;
 	}
-	
-	
+
+	public Date getAcknowledgementDate() {
+		return acknowledgementDate;
+	}
+	public void setAcknowledgementDate(Date acknowledgementDate) {
+		this.acknowledgementDate = acknowledgementDate;
+	}
+	public Date getCreateDate() {
+		return createDate;
+	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
 	@Override
 	public String toString() {
 		return "ComplaintModel [complaintId=" + complaintId + ", complaintSubject=" + complaintSubject
 				+ ", complaintMessage=" + complaintMessage + ", complaintReference=" + complaintReference
 				+ ", complaintRootCause=" + complaintRootCause + ", complaintAction=" + complaintAction
-				+ ", complaintStatus=" + complaintStatus + ", complaintType=" + complaintType + ", customer=" + customer
-				+ ", category=" + category + ", complaintsDetails=" + complaintsDetails + "]";
+				+ ", complaintStatus=" + complaintStatus + ", complaintType=" + complaintType + ", acknowledgementDate="
+				+ acknowledgementDate + ", createDate=" + createDate + ", updateDate=" + updateDate + ", customer="
+				+ customer + ", category=" + category + ", complaintsDetails=" + complaintsDetails + "]";
 	}
 	
 	

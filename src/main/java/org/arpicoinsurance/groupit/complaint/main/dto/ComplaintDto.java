@@ -1,7 +1,9 @@
 package org.arpicoinsurance.groupit.complaint.main.dto;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
 
 public class ComplaintDto {
 	private Integer complaintId;
@@ -12,10 +14,15 @@ public class ComplaintDto {
 	private String complaintAction;
 	private String complaintStatus;
 	private String complaintType;
+	private String complaintCreateDate;
+	private String acknowledgementDate;
 	
-	private CustomerDto customer;
+	private Integer customerId;
 
-	private CategoryDto category;
+	private Integer categoryId;
+	
+	private CustomerDto customerDto;
+	private CategoryDto categoryDto;
 	
 	private List<ComplaintStageDetailsDto> complaintsDetails=new ArrayList<>();
 
@@ -69,37 +76,60 @@ public class ComplaintDto {
 		this.complaintType = complaintType;
 	}
 	
-	public CustomerDto getCustomer() {
-		return customer;
-	}
-	public void setCustomer(CustomerDto customer) {
-		this.customer = customer;
-	}
 	
-	public CategoryDto getCategory() {
-		return category;
+	public Integer getCustomerId() {
+		return customerId;
 	}
-	public void setCategory(CategoryDto category) {
-		this.category = category;
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
 	}
-	
-	
+	public Integer getCategoryId() {
+		return categoryId;
+	}
+	public void setCategoryId(Integer categoryId) {
+		this.categoryId = categoryId;
+	}
+	public CustomerDto getCustomerDto() {
+		return customerDto;
+	}
+	public void setCustomerDto(CustomerDto customerDto) {
+		this.customerDto = customerDto;
+	}
+	public CategoryDto getCategoryDto() {
+		return categoryDto;
+	}
+	public void setCategoryDto(CategoryDto categoryDto) {
+		this.categoryDto = categoryDto;
+	}
 	public List<ComplaintStageDetailsDto> getComplaintsDetails() {
 		return complaintsDetails;
 	}
 	public void setComplaintsDetails(List<ComplaintStageDetailsDto> complaintsDetails) {
 		this.complaintsDetails = complaintsDetails;
 	}
+	
+	public String getComplaintCreateDate() {
+		return complaintCreateDate;
+	}
+	public void setComplaintCreateDate(String complaintCreateDate) {
+		this.complaintCreateDate = complaintCreateDate;
+	}
+	public String getAcknowledgementDate() {
+		return acknowledgementDate;
+	}
+	public void setAcknowledgementDate(String acknowledgementDate) {
+		this.acknowledgementDate = acknowledgementDate;
+	}
 	@Override
 	public String toString() {
 		return "ComplaintDto [complaintId=" + complaintId + ", complaintSubject=" + complaintSubject
 				+ ", complaintMessage=" + complaintMessage + ", complaintReference=" + complaintReference
 				+ ", complaintRootCause=" + complaintRootCause + ", complaintAction=" + complaintAction
-				+ ", complaintStatus=" + complaintStatus + ", complaintType=" + complaintType + ", customer=" + customer
-				+ ", category=" + category + ", complaintsDetails=" + complaintsDetails + "]";
+				+ ", complaintStatus=" + complaintStatus + ", complaintType=" + complaintType + ", complaintCreateDate="
+				+ complaintCreateDate + ", acknowledgementDate=" + acknowledgementDate + ", customerId=" + customerId
+				+ ", categoryId=" + categoryId + ", customerDto=" + customerDto + ", categoryDto=" + categoryDto
+				+ ", complaintsDetails=" + complaintsDetails + "]";
 	}
-	
-	
 	
 	
 	

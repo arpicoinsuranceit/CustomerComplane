@@ -13,6 +13,22 @@ public class AppConstant {
     public static final String LOGOUT_URL="/logout";
     public static final String ROOT_URL="/";
     public static final boolean FALSE = false;
+    public static final String IMAGE_UPLOAD_URL="D:/CCMImages/";
+    public static final String COMPLAINT_STATUS_NEW="NEW";
+    public static final String COMPLAINT_STATUS_ACKNOWLEDGE="ACKNOWLEDGE";
+    public static final String COMPLAINT_STATUS_PARTIALLY="PARTIALLY RESOLVED";
+    public static final String COMPLAINT_STATUS_FULLY="FULLY RESOLVED";
+    public static final String COMPLAINT_STATUS_NOT="NOT RESOLVED";
+    public static final String COMPLAINT_TYPE_EMAIL="EMAIL";
+    public static final String COMPLAINT_TYPE_WEB="WEB";
+    public static final String COMPLAINT_TYPE_INWRITING="INWRITING";
+    public static final String COMPLAINT_TYPE_PHONE="PHONE";
+    
+    public static final String COMPLAINT_STAGE_ACKNOWLEDGE="ACKNOWLEDGE";
+    
+    public static final String COMPLAINT_STAGE_NEW="NEW";
     
     public static final String LOGIN_REST_URL="/";
+    
+    
 }

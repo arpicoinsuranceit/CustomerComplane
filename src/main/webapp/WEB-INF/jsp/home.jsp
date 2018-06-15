@@ -134,10 +134,10 @@
 								</div>
 								<div class="card-body">
 									<div class="tab-content">
-										<div class="tab-pane active" id="profile">
-											<table class="table">
-												<tbody>
-													<tr>
+										<div class="tab-pane active" id="profile" style="overflow-x: auto;max-height: 300px;">
+											<table class="table" >
+												<tbody id="tbody_newComplaints">
+													<!--<tr>
 														<td>
 															<div class="form-check">
 																<label class="form-check-label"> <input
@@ -233,8 +233,12 @@
 																<i class="material-icons">close</i>
 															</button>
 														</td>
-													</tr>
+													</tr>-->
 												</tbody>
+												<tfoot id="tfoot_newComplaints">
+												
+												</tfoot>
+												
 											</table>
 										</div>
 										<div class="tab-pane" id="messages">
@@ -294,8 +298,8 @@
 										</div>
 										<div class="tab-pane" id="settings">
 											<table class="table">
-												<tbody>
-													<tr>
+												<tbody id="tbody_partiallyComplaints">
+													<!--  <tr>
 														<td>
 															<div class="form-check">
 																<label class="form-check-label"> <input
@@ -367,7 +371,7 @@
 																<i class="material-icons">close</i>
 															</button>
 														</td>
-													</tr>
+													</tr>-->
 												</tbody>
 											</table>
 										</div>
@@ -388,24 +392,142 @@
 	<script src="../assets/js/core/popper.min.js"></script>
 	<script src="../assets/js/bootstrap-material-design.js"></script>
 	<script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+	<script src="../assets/js/plugins/bootstrap-notify.js"></script>
 
 	<script>
-		<!--$(document).ready(function() {
+		$(document).ready(function() {
+			loadNewComplaints();
+			loadPartiallyResolve();
 
-			$('#signInForm').validate({ // initialize the plugin
-				rules : {
-					username : {
-						required : true,
-						minlength : 5
-					},
-					password : {
-						required : true,
-						minlength : 5
+		});
+		
+		function loadNewComplaints(){
+			$.ajax({
+				type : "POST",
+				url : "/search_complaint",
+				data : {complaintStatus : 'NEW'},
+				success : function(result) {
+					$("#tbody_newComplaints tr").remove();
+					if(result != null){
+						var html="<tr>";
+						for(var i in result){
+							console.log(i);
+							html+="<td>"+
+								"<div class=\"form-check\">"+
+								"<label class=\"form-check-label\"> <input "+
+								"class=\"form-check-input\" type=\"checkbox\" onclick=\"addCompaintToAccept('"+result[i].complaintId+"');\" value=\"'"+result[i].complaintId+"'\" >"+
+								"<span class=\"form-check-sign\">"+
+								"<span class=\"check\"></span>"+
+								"</span>"+
+								"</label>"+
+								"</div>"+
+								"</td>";
+								
+							html+="<td>"+result[i].complaintReference+"</td>";
+							
+							html+="<td>"+result[i].customerDto.customerNic+"</td>";
+							
+							html+="<td>"+result[i].complaintMessage+"</td>";
+							
+							html+="<td>"+result[i].complaintCreateDate+"</td>";
+							
+							
+							html+="</tr>";
+							
+							$("#tbody_newComplaints").append(html);
+							html="<tr>";
+						}
+						$("#tfoot_newComplaints button").remove();
+						$("#tfoot_newComplaints").append("<button class=\"btn btn-blue pull-right\" onclick=\"acceptComplaints()\">ACCEPT</button>");
+						
 					}
+					
+				},
+				error : function(result) {
+					alert(result);
 				}
 			});
+		}
+		
+		function loadPartiallyResolve(){
+			$.ajax({
+				type : "POST",
+				url : "/search_complaint",
+				data : {complaintStatus : 'PARTIALLY'},
+				success : function(result) {
+					$("#tbody_partiallyComplaints tr").remove();
+					if(result != null){
+						var html="<tr>";
+						for(var i in result){
+							console.log(i);
+							
+							html+="<td>"+result[i].complaintReference+"</td>";
+							
+							html+="<td>"+result[i].customerDto.customerNic+"</td>";
+							
+							html+="<td>"+result[i].complaintMessage+"</td>";
+							
+							html+="<td>"+result[i].complaintCreateDate+"</td>";
+							
+							
+							html+="</tr>";
+							
+							$("#tbody_partiallyComplaints").append(html);
+							html="<tr>";
+						}
+					}
+					
+				},
+				error : function(result) {
+					alert(result);
+				}
+			});
+		}
+		
+		var complaintIdArr=[];
+		
+		function addCompaintToAccept(id){
+			complaintIdArr.push(id);
+		}
+		
+		function acceptComplaints(){
+			$.ajax({
+				type : "POST",
+				url : "/accept_complaint",
+				data : {complaints : complaintIdArr},
+				traditional: true,
+				success : function(result) {
+					if(result == "200"){
+						showNotification('bottom','right','success','Success');
+						loadNewComplaints();
+					}
+				},
+				error : function(result) {
+					alert(result);
+				}
+			});
+		}
+		
+		
+		function showNotification(from, align,type,message) {
+	        type = ['', 'info', 'danger','success', 'warning', 'rose', 'primary'];
 
-		})-->
+	        color = Math.floor((Math.random() * 6) + 1);
+
+	        $.notify({
+	            icon: "notifications",
+	            message: message
+
+	        }, {
+	            type: 'success',
+	            timer: 3000,
+	            placement: {
+	                from: from,
+	                align: align
+	            }
+	        });
+	    }
+		
 	</script>
 </body>
 

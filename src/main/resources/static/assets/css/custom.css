@@ -67,11 +67,6 @@ input[type="file"] {
   display: block;
 }
 
-
-.pip {
-  display: inline-block;
-  margin: 10px 10px 0 0;
-}
 .remove {
   display: block;
   background: #444;

@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="complaint_stage_detail")
@@ -45,6 +46,7 @@ public class ComplaintStageDetailsModel {
 		this.images = images;
 	}
 	@ManyToOne
+	@NotNull
 	public StageModel getStage() {
 		return stage;
 	}
@@ -52,6 +54,7 @@ public class ComplaintStageDetailsModel {
 		this.stage = stage;
 	}
 	@ManyToOne
+	@NotNull
 	public ComplaintModel getComplaint() {
 		return complaint;
 	}

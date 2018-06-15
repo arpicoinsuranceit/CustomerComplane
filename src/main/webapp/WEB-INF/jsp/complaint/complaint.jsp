@@ -33,11 +33,115 @@
 <body class="">
 	<div class="wrapper">
 		
-		<jsp:include page="../core/sidebar.jsp" ></jsp:include>
+		<!-- sidebar start -->
+	<div class="sidebar" data-color="ar-orange"
+			data-background-color="white"
+			data-image="../assets/img/sidebar-1.jpg">
+
+	<div class="logo">
+				<a href="http://www.arpicoinsurance.com/"
+					class="simple-text logo-normal"><img src="assets/img/logo.png"
+					style="width: 75%; height: 100px;" alt="ARPICO INSURANCE"></a>
+			</div>
+			<div class="sidebar-wrapper">
+				<ul class="nav">
+					<li class="nav-item"><a class="nav-link"
+						href="/home"> <i class="material-icons">dashboard</i>
+							<p>Dashboard</p>
+					</a></li>
+					<li class="nav-item active">
+						<a class="nav-link" href="/complaint"> 
+							<i class="material-icons">content_paste</i>
+							<p>Customer Complaints</p>
+						</a>
+					</li>
+					<li class="nav-item "><a class="nav-link"
+						href="../examples/typography.html"> <i class="material-icons">library_books</i>
+							<p>Reports</p>
+					</a></li>
+					<li class="nav-item "><a class="nav-link"
+						href="../examples/notifications.html"> <i
+							class="material-icons">notifications</i>
+							<p>Notifications</p>
+					</a></li>
+					<li class="nav-item "><a class="nav-link"
+						href="../examples/user.html"> <i class="material-icons">person</i>
+							<p>User Profile</p>
+					</a></li>
+				</ul>
+			</div>
+		</div>
+		<!-- sidebar end -->
+		
+		
 		
 		<div class="main-panel">
+		
+		<!-- nav bar start -->
+		
+		<nav
+				class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top">
+			<div class="container-fluid">
+				<div class="navbar-wrapper">
+					<a class="navbar-brand" href="/complaint">Customer Complaints</a>
+				</div>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navigation" aria-controls="navigation-index"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="navbar-toggler-icon icon-bar"></span> <span
+						class="navbar-toggler-icon icon-bar"></span> <span
+						class="navbar-toggler-icon icon-bar"></span>
+				</button>
+				<div class="collapse navbar-collapse justify-content-end"
+					id="navigation">
+					<form class="navbar-form">
+						<div class="input-group no-border">
+							<input type="text" value="" class="form-control"
+								placeholder="Search...">
+							<button type="submit"
+								class="btn btn-white btn-round btn-just-icon">
+								<i class="material-icons">search</i>
+								<div class="ripple-container"></div>
+							</button>
+						</div>
+					</form>
+					<ul class="navbar-nav">
+						<li class="nav-item"><a class="nav-link" href="#pablo"> <i
+								class="material-icons">dashboard</i>
+								<p>
+									<span class="d-lg-none d-md-block">Stats</span>
+								</p>
+						</a></li>
+						<li class="nav-item dropdown"><a class="nav-link"
+							href="http://example.com" id="navbarDropdownMenuLink"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<i class="material-icons">notifications</i> <span
+								class="notification">5</span>
+								<p>
+									<span class="d-lg-none d-md-block">Some Actions</span>
+								</p>
+						</a>
+							<div class="dropdown-menu dropdown-menu-right"
+								aria-labelledby="navbarDropdownMenuLink">
+								<a class="dropdown-item" href="#">Mike John responded to
+									your email</a> <a class="dropdown-item" href="#">You have 5 new
+									tasks</a> <a class="dropdown-item" href="#">You're now friend
+									with Andrew</a> <a class="dropdown-item" href="#">Another
+									Notification</a> <a class="dropdown-item" href="#">Another One</a>
+							</div></li>
+						<li class="nav-item"><a class="nav-link" href=""> <i
+								class="material-icons">person</i>
+								<p>
+									<span class="d-lg-none d-md-block">Account</span>
+								</p>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+			</nav>
 			
-		<jsp:include page="../core/navbar.jsp"></jsp:include>
+			<!-- nav bar end -->
 		
 			<div class="content">
                 <div class="container-fluid">
@@ -50,7 +154,7 @@
                                     	<h4 class="card-title">Complaints</h4>
                                     </div>
                                     <div class="col-md-4 col-lg-4">
-                                    	<button type="button" class="btn btn-bl pull-right" style="background-color: #F26F21;"><a href="/addcomplaint">New</a></button>
+                                    	<button type="button" class="btn btn-bl pull-right" style="background-color: #F26F21;" onclick="addComplaint()">New</button>
                                     </div>
                                     </div>
                                     
@@ -68,7 +172,6 @@
 	                                            <th>Complaint Category</th>
 	                                            <th>Subject</th>
 	                                            <th>Message</th>
-	                                            <th> </th>
 	                                            <th> </th>
 	                                            
 	                                        </tr>
@@ -95,6 +198,9 @@
 
 	<script>
 		
+		function addComplaint(){
+			window.location.replace("/addcomplaint");
+		}
 		
 		$(function () {
             var table = $('#complaint_table').DataTable({
@@ -108,11 +214,14 @@
             	    { "data": "category" },
             	    { "data": "subject" },
             	    { "data": "message" },
-            	    { "data": "edit" },
-            	    { "data": "remove" }
+            	    { "data": "edit" }
             	]
             });
         });
+		
+		function editComplaint(id){
+			alert(id);
+		}
 	</script>
 </body>
 
