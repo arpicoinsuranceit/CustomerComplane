@@ -4,7 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
@@ -214,8 +214,8 @@ public class ComplaintServiceImpl implements ComplaintService{
 		for (ComplaintModel complaintModel : complaintModels) {
 			
 			SimpleDateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd");
-			LocalDateTime nowdateTime=LocalDateTime.now();
-			LocalDateTime dateTime=LocalDateTime.parse(dateFormat.format(complaintModel.getCreateDate()));
+			LocalDate nowdateTime=LocalDate.now();
+			LocalDate dateTime=LocalDate.parse(dateFormat.format(complaintModel.getCreateDate()));
 			
 			long diff=ChronoUnit.DAYS.between(nowdateTime, dateTime);
 			
@@ -275,6 +275,38 @@ public class ComplaintServiceImpl implements ComplaintService{
 		}
 		
 		return "200";
+	}
+
+	@Override
+	public ComplaintDto findByComplaintId(Integer id) throws Exception {
+		ComplaintModel complaintModel=complaintDao.findOne(id);
+		ComplaintDto complaintDto=new ComplaintDto();
+		if(complaintModel != null) {
+			complaintDto.setAcknowledgementDate(new SimpleDateFormat("yyyy-MM-dd").format(complaintModel.getAcknowledgementDate()));
+			complaintDto.setCategoryId(complaintModel.getCategory().getCategoryId());
+			complaintDto.setComplaintAction(complaintModel.getComplaintAction());
+			complaintDto.setComplaintCreateDate(new SimpleDateFormat("yyyy-MM-dd").format(complaintModel.getCreateDate()));
+			complaintDto.setComplaintId(complaintModel.getComplaintId());
+			complaintDto.setComplaintMessage(complaintModel.getComplaintMessage());
+			complaintDto.setComplaintReference(complaintModel.getComplaintReference());
+			complaintDto.setComplaintRootCause(complaintModel.getComplaintRootCause());
+			complaintDto.setComplaintType(complaintModel.getComplaintType());
+			complaintDto.setComplaintSubject(complaintModel.getComplaintSubject());
+			complaintDto.setComplaintType(complaintModel.getComplaintType());
+			
+			CustomerModel customerModel=complaintModel.getCustomer();
+			CustomerDto customerDto=new CustomerDto();
+			customerDto.setCustomerId(customerModel.getCustomerId());
+			customerDto.setCreateDate(customerModel.getCreateDate());
+			customerDto.setCustomerEmail(customerModel.getCustomerEmail());
+			customerDto.setCustomerMobile(customerModel.getCustomerMobile());
+			customerDto.setCustomerName(customerModel.getCustomerName());
+			customerDto.setCustomerNic(customerModel.getCustomerNic());
+			
+			complaintDto.setCustomerId(complaintModel.getCustomer().getCustomerId());
+			complaintDto.setCustomerDto(customerDto);
+		}
+		return complaintDto;
 	}
 
 }

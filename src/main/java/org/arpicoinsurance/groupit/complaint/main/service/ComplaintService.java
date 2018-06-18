@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import org.arpicoinsurance.groupit.complaint.main.dto.ComplaintDto;
 import org.arpicoinsurance.groupit.complaint.main.dto.CustomerDto;
-import org.arpicoinsurance.groupit.complaint.main.model.ComplaintModel;
 import org.arpicoinsurance.groupit.complaint.main.model.ComplaintStageDetailsModel;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,4 +20,6 @@ public interface ComplaintService {
 	public String uploadImage(MultipartFile multipartFile,Integer complaintId,ComplaintStageDetailsModel complaintStageDetailsModel)throws Exception;
 
 	public List<ComplaintDto> findByComplaintStatus(String complaintStatus) throws Exception;
+	
+	public ComplaintDto findByComplaintId(Integer id) throws Exception;
 }

@@ -221,6 +221,7 @@
 		
 		function editComplaint(id){
 			alert(id);
+			window.location.replace("/updatecomplaint/"+id);
 		}
 	</script>
 </body>

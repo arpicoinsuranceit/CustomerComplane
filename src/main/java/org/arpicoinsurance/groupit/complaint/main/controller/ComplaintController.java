@@ -10,6 +10,7 @@ import org.arpicoinsurance.groupit.complaint.main.dto.CustomerDto;
 import org.arpicoinsurance.groupit.complaint.main.service.ComplaintService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,6 +33,22 @@ public class ComplaintController {
 		return "complaint/addcomplaint";
 	}
 	
+	@RequestMapping("/updatecomplaint/{id}")
+	public String viewUpdateComplaintPage(@PathVariable Integer id,HttpSession httpSession) {
+		System.out.println("called update ...");
+		try {
+			ComplaintDto  complaintDto=complaintService.findByComplaintId(id);
+			System.out.println(complaintDto.toString());
+			
+			httpSession.setAttribute("editComplaint", complaintDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		httpSession.setAttribute("editId", id);
+		return "complaint/updatecomplaint";
+	}
+	
+	
 	@RequestMapping(value = "/view_complaint_dt", method = RequestMethod.GET)
 	@ResponseBody
 	public Map viewCustomerData(HttpSession httpSession) throws Exception {
@@ -46,7 +63,7 @@ public class ComplaintController {
 			entity.put("email", complaintDto.getCustomerDto().getCustomerEmail());
 			entity.put("mobile", complaintDto.getCustomerDto().getCustomerMobile());
 			entity.put("reference", complaintDto.getComplaintReference());
-			entity.put("category", complaintDto.getComplaintReference());
+			entity.put("category", complaintDto.getCategoryDto().getCategoryName());
 			entity.put("subject", complaintDto.getComplaintSubject());
 			entity.put("message", complaintDto.getComplaintMessage());
 			entity.put("edit", "<button type=\"button\" rel=\"tooltip\" title=\"Edit Task\" onclick=\"editComplaint('"+complaintDto.getComplaintId()+"')\" class=\"btn btn-primary btn-link btn-sm\"> <i class=\"material-icons\">edit</i>" + 
