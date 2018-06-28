@@ -173,7 +173,7 @@
 	                                            <th>Subject</th>
 	                                            <th>Message</th>
 	                                            <th> </th>
-	                                            
+	                                            <th> </th>
 	                                        </tr>
 	                                     </thead>
                                     </table>
@@ -214,14 +214,20 @@
             	    { "data": "category" },
             	    { "data": "subject" },
             	    { "data": "message" },
-            	    { "data": "edit" }
+            	    { "data": "edit" },
+            	    { "data": "view" }
             	]
             });
         });
 		
 		function editComplaint(id){
-			alert(id);
+			//alert(id);
 			window.location.replace("/updatecomplaint/"+id);
+		}
+		
+		function viewComplaint(id){
+			//alert(id);
+			window.location.replace("/viewcomplaint/"+id);
 		}
 	</script>
 </body>

@@ -45,7 +45,7 @@
 										<i class="material-icons">content_copy</i>
 									</div>
 									<p class="card-category">New Complaints</p>
-									<h3 class="card-title">100</h3>
+									<h3 class="card-title"><%= session.getAttribute("NEW") %></h3>
 								</div>
 								<div class="card-footer">
 									<div class="stats">
@@ -61,7 +61,7 @@
 										<i class="material-icons">info_outline</i>
 									</div>
 									<p class="card-category">Not Resolved</p>
-									<h3 class="card-title">20</h3>
+									<h3 class="card-title"><%= session.getAttribute("NOT RESOLVED") %></h3>
 								</div>
 								<div class="card-footer">
 									<div class="stats">
@@ -78,7 +78,7 @@
 										<i class="material-icons">store</i>
 									</div>
 									<p class="card-category">Partially</p>
-									<h3 class="card-title">75</h3>
+									<h3 class="card-title"><%= session.getAttribute("PARTIALLY RESOLVED") %></h3>
 								</div>
 								<div class="card-footer">
 									<div class="stats">
@@ -94,7 +94,7 @@
 										<i class="fa fa-twitter"></i>
 									</div>
 									<p class="card-category">Fully Resolved</p>
-									<h3 class="card-title">245</h3>
+									<h3 class="card-title"><%= session.getAttribute("FULLY RESOLVED") %></h3>
 								</div>
 								<div class="card-footer">
 									<div class="stats">
@@ -398,6 +398,8 @@
 		$(document).ready(function() {
 			loadNewComplaints();
 			loadPartiallyResolve();
+			loadFullyResolve();
+			loadNotResolve();
 
 		});
 		
@@ -453,7 +455,7 @@
 			$.ajax({
 				type : "POST",
 				url : "/search_complaint",
-				data : {complaintStatus : 'PARTIALLY'},
+				data : {complaintStatus : 'PARTIALLY RESOLVED'},
 				success : function(result) {
 					$("#tbody_partiallyComplaints tr").remove();
 					if(result != null){
@@ -484,6 +486,36 @@
 			});
 		}
 		
+		function loadFullyResolve(){
+			$.ajax({
+				type : "POST",
+				url : "/search_complaint",
+				data : {complaintStatus : 'FULLY RESOLVED'},
+				success : function(result) {
+					
+					
+				},
+				error : function(result) {
+					//alert(result);
+				}
+			});
+		}
+		
+		function loadNotResolve(){
+			$.ajax({
+				type : "POST",
+				url : "/search_complaint",
+				data : {complaintStatus : 'NOT RESOLVED'},
+				success : function(result) {
+					
+					
+				},
+				error : function(result) {
+					//alert(result);
+				}
+			});
+		}
+		
 		var complaintIdArr=[];
 		
 		function addCompaintToAccept(id){
@@ -491,21 +523,24 @@
 		}
 		
 		function acceptComplaints(){
-			$.ajax({
-				type : "POST",
-				url : "/accept_complaint",
-				data : {complaints : complaintIdArr},
-				traditional: true,
-				success : function(result) {
-					if(result == "200"){
-						showNotification('bottom','right','success','Success');
-						loadNewComplaints();
+			if(complaintIdArr.length > 0){
+				$.ajax({
+					type : "POST",
+					url : "/accept_complaint",
+					data : {complaints : complaintIdArr},
+					traditional: true,
+					success : function(result) {
+						if(result == "200"){
+							showNotification('bottom','right','success','Success');
+							loadNewComplaints();
+						}
+					},
+					error : function(result) {
+						alert(result);
 					}
-				},
-				error : function(result) {
-					alert(result);
-				}
-			});
+				});
+			}
+			
 		}
 		
 		

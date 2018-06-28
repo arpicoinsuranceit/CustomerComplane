@@ -36,7 +36,7 @@
 
 	<div class="logo">
 				<a href="http://www.arpicoinsurance.com/"
-					class="simple-text logo-normal"><img src="assets/img/logo.png"
+					class="simple-text logo-normal"><img src="../assets/img/logo.png"
 					style="width: 75%; height: 100px;" alt="ARPICO INSURANCE"></a>
 			</div>
 			<div class="sidebar-wrapper">
@@ -150,7 +150,7 @@
                                     <h3 class="card-title">Update Complaint</h3>
                                 </div>
                                 <div class="card-body">
-                                    <form name="add_complaint_form" id="add_complaint_form" enctype='multipart/form-data'>
+                                    <form name="update_complaint_form" id="update_complaint_form" enctype='multipart/form-data'>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
@@ -187,8 +187,8 @@
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Complaint Category </label>
-                                                    <select class="form-control" id="comCategory" name="comCategory" value=<%= complaintDto.getCategoryId() %> disabled="disabled">
-                                                    </select>
+                                                    <input class="form-control" id="comCategory" name="comCategory" value=<%= complaintDto.getCategoryDto().getCategoryName() %> readonly>
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -206,19 +206,22 @@
                                                     <textarea class="form-control" id="comMessage" name="comMessage" readonly><%= complaintDto.getComplaintMessage() %></textarea>
                                                 </div>
 	                                        </div>
-                                            <div class="col-md-4">
+                                            <!-- <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Attachment </label>
                                                     <div class="upload-image-preview1" style="width:100%;height: auto;background-color: lightgrey;border:1px dashed black;"> </div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                             
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Complaint Status </label>
-                                                    <select type="text" class="form-control" id="comStatus" name="comStatus">
+                                                    <select  class="form-control" id="comStatus" name="comStatus">
+                                                    	<option value="FULLY RESOLVED">FULLY RESOLVED</option>
+                                                    	<option value="PARTIALLY RESOLVED">PARTIALLY RESOLVED</option>
+                                                    	<option value="NOT RESOLVED">NOT RESOLVED</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -242,7 +245,7 @@
                                         	<div class="col-md-4">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Complaint Stage </label>
-                                                    <select type="text" class="form-control" id="comStage" name="comStage">
+                                                    <select class="form-control" id="comStage" name="comStage">
                                                     </select>
                                                 </div>
                                             </div>
@@ -281,6 +284,7 @@
 	<script src="../assets/js/core/jquery.min.js"></script>
 	<script src="../assets/js/core/popper.min.js"></script>
 	<script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+	<script src="../assets/js/plugins/bootstrap-notify.js"></script>
 
 	<script>
 	
@@ -345,11 +349,12 @@
 		function loadCategory(){
 			$.ajax({
 				type : "GET",
-				url : "/view_category",
+				url : "/view_stages",
 				success : function(result) {
-					var category = document.getElementById('comCategory');
+					var stages = document.getElementById('comStage');
 					for(var i in result){
-						category.options.add(new Option(result[i].categoryName, result[i].categoryId));
+						console.log(result);
+						stages.options.add(new Option(result[i].stageName, result[i].stageId));
 					}
 				},
 				error : function(result) {
@@ -359,8 +364,8 @@
 		}
 		
 		
-		function sendComplaint(){
-			var formData = new FormData($('#add_complaint_form')[0]);
+		function updateComplaint(){
+			var formData = new FormData($('#update_complaint_form')[0]);
 			
 			var count = 0;
 			
@@ -379,7 +384,7 @@
 			
 			$.ajax({
 				type : "POST",
-				url : "/send_complaint",
+				url : "/update_complaint",
 				data : formData,
 				enctype: 'multipart/form-data',
 				processData: false,
@@ -388,10 +393,10 @@
 				success : function(result) {
 					
 					if(result == 200){
-						alert("Success");
-						$('#add_complaint_form')[0].reset();
+						showNotification('bottom','right','success','Success');
+						$('#update_complaint_form')[0].reset();
 					}else{
-						alert("Fail to send");
+						showNotification('bottom','right','warning','Fail');
 					}
 					
 				},
@@ -401,6 +406,25 @@
 			});
 			
 		}
+		
+		function showNotification(from, align,type,message) {
+	        type = ['', 'info', 'danger','success', 'warning', 'rose', 'primary'];
+
+	        color = Math.floor((Math.random() * 6) + 1);
+
+	        $.notify({
+	            icon: "notifications",
+	            message: message
+
+	        }, {
+	            type: 'success',
+	            timer: 3000,
+	            placement: {
+	                from: from,
+	                align: align
+	            }
+	        });
+	    }
 		
 	</script>
 </body>

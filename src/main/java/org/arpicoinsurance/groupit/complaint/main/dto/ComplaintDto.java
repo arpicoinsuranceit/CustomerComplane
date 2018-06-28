@@ -15,6 +15,7 @@ public class ComplaintDto {
 	private String complaintStatus;
 	private String complaintType;
 	private String complaintCreateDate;
+	private String complaintuUpdateDate;
 	private String acknowledgementDate;
 	
 	private Integer customerId;
@@ -120,16 +121,24 @@ public class ComplaintDto {
 	public void setAcknowledgementDate(String acknowledgementDate) {
 		this.acknowledgementDate = acknowledgementDate;
 	}
+	
+	public String getComplaintuUpdateDate() {
+		return complaintuUpdateDate;
+	}
+	public void setComplaintuUpdateDate(String complaintuUpdateDate) {
+		this.complaintuUpdateDate = complaintuUpdateDate;
+	}
 	@Override
 	public String toString() {
 		return "ComplaintDto [complaintId=" + complaintId + ", complaintSubject=" + complaintSubject
 				+ ", complaintMessage=" + complaintMessage + ", complaintReference=" + complaintReference
 				+ ", complaintRootCause=" + complaintRootCause + ", complaintAction=" + complaintAction
 				+ ", complaintStatus=" + complaintStatus + ", complaintType=" + complaintType + ", complaintCreateDate="
-				+ complaintCreateDate + ", acknowledgementDate=" + acknowledgementDate + ", customerId=" + customerId
-				+ ", categoryId=" + categoryId + ", customerDto=" + customerDto + ", categoryDto=" + categoryDto
-				+ ", complaintsDetails=" + complaintsDetails + "]";
+				+ complaintCreateDate + ", complaintuUpdateDate=" + complaintuUpdateDate + ", acknowledgementDate="
+				+ acknowledgementDate + ", customerId=" + customerId + ", categoryId=" + categoryId + ", customerDto="
+				+ customerDto + ", categoryDto=" + categoryDto + ", complaintsDetails=" + complaintsDetails + "]";
 	}
+	
 	
 	
 	

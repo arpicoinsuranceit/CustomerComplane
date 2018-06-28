@@ -1,5 +1,7 @@
 package org.arpicoinsurance.groupit.complaint.main.service.impl;
 
+import java.util.Date;
+
 import javax.transaction.Transactional;
 
 import org.arpicoinsurance.groupit.complaint.main.dao.ComplaintStageDetailsDao;
@@ -25,6 +27,7 @@ public class ComplaintStageDetailsServiceImpl implements ComplaintStageDetailsSe
 		StageModel stageModel=stageDao.findByStageName(stageName);
 		if(stageModel != null) {
 			complaintStageDetailsModel.setStage(stageModel);
+			complaintStageDetailsModel.setCreateDate(new Date());
 			return complaintStageDao.save(complaintStageDetailsModel);
 		}
 		return null;

@@ -1,6 +1,7 @@
 package org.arpicoinsurance.groupit.complaint.main.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,6 +24,9 @@ public class ComplaintStageDetailsModel {
 	private StageModel stage;
 	@Column(name="complaint",nullable=false)
 	private ComplaintModel complaint;
+	
+	private Date createDate;
+	private Date updateDate;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -61,11 +65,21 @@ public class ComplaintStageDetailsModel {
 	public void setComplaint(ComplaintModel complaint) {
 		this.complaint = complaint;
 	}
-	@Override
-	public String toString() {
-		return "ComplaintStageDetails [complaintStageDetailId=" + complaintStageDetailId + ", description="
-				+ description + ", images=" + images + ", stage=" + stage + ", complaint=" + complaint + "]";
+	
+	public Date getCreateDate() {
+		return createDate;
 	}
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+	public Date getUpdateDate() {
+		return updateDate;
+	}
+	public void setUpdateDate(Date updateDate) {
+		this.updateDate = updateDate;
+	}
+	
+	
 	
 	
 }

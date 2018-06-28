@@ -34,12 +34,12 @@
                     <nav class="pull-left">
                         <ul>
                             <li>
-                                <a href="https://www.creative-tim.com">
+                                <a href="/home">
                                     DASHBOARD
                                 </a>
                             </li>
                             <li>
-                                <a href="http://presentation.creative-tim.com">
+                                <a href="/complaint">
                                     CUSTOMER COMPLAINT
                                 </a>
                             </li>

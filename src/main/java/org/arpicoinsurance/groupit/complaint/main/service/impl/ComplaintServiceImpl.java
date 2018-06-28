@@ -19,7 +19,10 @@ import org.arpicoinsurance.groupit.complaint.main.dao.ImageDao;
 import org.arpicoinsurance.groupit.complaint.main.dao.StageDao;
 import org.arpicoinsurance.groupit.complaint.main.dto.CategoryDto;
 import org.arpicoinsurance.groupit.complaint.main.dto.ComplaintDto;
+import org.arpicoinsurance.groupit.complaint.main.dto.ComplaintStageDetailsDto;
 import org.arpicoinsurance.groupit.complaint.main.dto.CustomerDto;
+import org.arpicoinsurance.groupit.complaint.main.dto.ImageDto;
+import org.arpicoinsurance.groupit.complaint.main.dto.StageDto;
 import org.arpicoinsurance.groupit.complaint.main.model.CategoryModel;
 import org.arpicoinsurance.groupit.complaint.main.model.ComplaintModel;
 import org.arpicoinsurance.groupit.complaint.main.model.ComplaintStageDetailsModel;
@@ -93,6 +96,7 @@ public class ComplaintServiceImpl implements ComplaintService{
 				if(stageModel!=null) {
 					complaintStageDetailsModel.setComplaint(complaintModel2);
 					complaintStageDetailsModel.setStage(stageModel);
+					complaintStageDetailsModel.setCreateDate(new Date());
 					ComplaintStageDetailsModel complaintStageDetailsModel2=stageDetailsDao.save(complaintStageDetailsModel);
 					
 					if(complaintStageDetailsModel2!=null) {
@@ -161,9 +165,100 @@ public class ComplaintServiceImpl implements ComplaintService{
 	}
 
 	@Override
-	public String updateComplaint(ComplaintDto complaintDto) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public String updateComplaint(ComplaintDto complaintDto,MultipartFile[] multipartFiles) throws Exception {
+		ComplaintModel complaintModel=new ComplaintModel();
+		
+		ComplaintDto existComplaintDto=findByComplaintId(complaintDto.getComplaintId());
+		
+		System.out.println(existComplaintDto.toString());
+		
+		if(existComplaintDto!=null) {
+			complaintModel.setComplaintId(existComplaintDto.getComplaintId());
+			complaintModel.setComplaintStatus(existComplaintDto.getComplaintStatus());
+			complaintModel.setComplaintRootCause(existComplaintDto.getComplaintRootCause());
+			complaintModel.setComplaintAction(existComplaintDto.getComplaintAction());
+			if(existComplaintDto.getComplaintuUpdateDate() == null) {
+				complaintModel.setUpdateDate(new Date());
+			}else {
+				complaintModel.setUpdateDate(new SimpleDateFormat("yyyy-MM-dd").parse(existComplaintDto.getComplaintuUpdateDate()));
+			}
+			
+			if(existComplaintDto.getAcknowledgementDate() != null) {
+				complaintModel.setAcknowledgementDate(new Date());
+			}else {
+				complaintModel.setAcknowledgementDate(new SimpleDateFormat("yyyy-MM-dd").parse(existComplaintDto.getAcknowledgementDate()));
+			}
+			
+			complaintModel.setCategory(categoryDao.findOne(existComplaintDto.getCategoryId()));
+			complaintModel.setComplaintMessage(existComplaintDto.getComplaintMessage());
+			complaintModel.setComplaintReference(existComplaintDto.getComplaintReference());
+			complaintModel.setComplaintSubject(existComplaintDto.getComplaintSubject());
+			complaintModel.setComplaintType(existComplaintDto.getComplaintType());
+			complaintModel.setCustomer(customerDao.findOne(existComplaintDto.getCustomerId()));
+			complaintModel.setCreateDate(new SimpleDateFormat("yyyy-MM-dd").parse(existComplaintDto.getComplaintCreateDate()));
+			
+			StageModel stageModel=stageDao.findOne(complaintDto.getComplaintsDetails().get(0).getStage().getStageId());
+			System.out.println(stageModel);
+			List<ComplaintStageDetailsModel> complaintStageDetailsModelList= stageDetailsDao.findByStage(stageModel);
+			System.out.println(complaintStageDetailsModelList.size());
+			ComplaintStageDetailsModel complaintStageDetailsModel=null;
+			for (ComplaintStageDetailsModel complaintStageDetailsModel2 : complaintStageDetailsModelList) {
+				if(complaintStageDetailsModel2.getComplaint().getComplaintId().equals(complaintModel.getComplaintId())) {
+					complaintStageDetailsModel=complaintStageDetailsModel2;
+				}
+			}
+			
+			complaintModel.setComplaintId(complaintDto.getComplaintId());
+			complaintModel.setComplaintStatus(complaintDto.getComplaintStatus());
+			complaintModel.setComplaintRootCause(complaintDto.getComplaintRootCause());
+			complaintModel.setComplaintAction(complaintDto.getComplaintAction());
+			complaintModel.setUpdateDate(new Date());
+			
+			
+			System.out.println(complaintStageDetailsModel);
+			if(complaintStageDetailsModel != null) {
+				ComplaintModel complaintModel2=complaintDao.save(complaintModel);
+				if(complaintModel2!=null) {
+					complaintStageDetailsModel.setDescription(complaintDto.getComplaintsDetails().get(0).getDescription());
+					stageDetailsDao.save(complaintStageDetailsModel);
+					for (MultipartFile multipartFile : multipartFiles) {
+						uploadImage(multipartFile, complaintModel2.getComplaintId(), complaintStageDetailsModel);
+					}
+				}else {
+					return "204";
+				}
+			}else {
+				ComplaintModel complaintModel2=complaintDao.save(complaintModel);
+				if(complaintModel2!=null) {
+					if(stageModel!=null) {
+						complaintStageDetailsModel=new ComplaintStageDetailsModel();
+						
+						complaintStageDetailsModel.setComplaint(complaintModel2);
+						complaintStageDetailsModel.setDescription(complaintDto.getComplaintsDetails().get(0).getDescription());
+						complaintStageDetailsModel.setStage(stageModel);
+						complaintStageDetailsModel.setCreateDate(new Date());
+						
+						ComplaintStageDetailsModel complaintStageDetailsModel2=stageDetailsDao.save(complaintStageDetailsModel);
+						
+						if(complaintStageDetailsModel2!=null) {
+							for (MultipartFile multipartFile : multipartFiles) {
+								uploadImage(multipartFile, complaintModel2.getComplaintId(), complaintStageDetailsModel2);
+							}
+						}else {
+							return "204";
+						}
+					}else {
+						return "204";
+					}
+				}else {
+					return "204";
+				}
+			}
+		}
+		
+		
+		
+		return "200";
 	}
 
 	@Override
@@ -282,17 +377,27 @@ public class ComplaintServiceImpl implements ComplaintService{
 		ComplaintModel complaintModel=complaintDao.findOne(id);
 		ComplaintDto complaintDto=new ComplaintDto();
 		if(complaintModel != null) {
-			complaintDto.setAcknowledgementDate(new SimpleDateFormat("yyyy-MM-dd").format(complaintModel.getAcknowledgementDate()));
+			if(complaintModel.getAcknowledgementDate() != null) {
+				complaintDto.setAcknowledgementDate(new SimpleDateFormat("yyyy-MM-dd").format(complaintModel.getAcknowledgementDate()));
+			}
+			
 			complaintDto.setCategoryId(complaintModel.getCategory().getCategoryId());
 			complaintDto.setComplaintAction(complaintModel.getComplaintAction());
 			complaintDto.setComplaintCreateDate(new SimpleDateFormat("yyyy-MM-dd").format(complaintModel.getCreateDate()));
+			if(complaintModel.getUpdateDate() != null) {
+				complaintDto.setComplaintuUpdateDate(new SimpleDateFormat("yyyy-MM-dd").format(complaintModel.getUpdateDate()));
+			}
+			if(complaintModel.getAcknowledgementDate() != null) {
+				complaintDto.setAcknowledgementDate(new SimpleDateFormat("yyyy-MM-dd").format(complaintModel.getAcknowledgementDate()));
+			}
+			//complaintDto.setAcknowledgementDate(new SimpleDateFormat("yyyy-MM-dd").format(complaintModel.getAcknowledgementDate()));
 			complaintDto.setComplaintId(complaintModel.getComplaintId());
 			complaintDto.setComplaintMessage(complaintModel.getComplaintMessage());
 			complaintDto.setComplaintReference(complaintModel.getComplaintReference());
 			complaintDto.setComplaintRootCause(complaintModel.getComplaintRootCause());
 			complaintDto.setComplaintType(complaintModel.getComplaintType());
 			complaintDto.setComplaintSubject(complaintModel.getComplaintSubject());
-			complaintDto.setComplaintType(complaintModel.getComplaintType());
+			complaintDto.setComplaintStatus(complaintModel.getComplaintStatus());
 			
 			CustomerModel customerModel=complaintModel.getCustomer();
 			CustomerDto customerDto=new CustomerDto();
@@ -305,6 +410,47 @@ public class ComplaintServiceImpl implements ComplaintService{
 			
 			complaintDto.setCustomerId(complaintModel.getCustomer().getCustomerId());
 			complaintDto.setCustomerDto(customerDto);
+			
+			CategoryDto categoryDto=new CategoryDto();
+			CategoryModel categoryModel=complaintModel.getCategory();
+			categoryDto.setCategoryId(categoryModel.getCategoryId());
+			categoryDto.setCategoryName(categoryModel.getCategoryName());
+			
+			complaintDto.setCategoryDto(categoryDto);
+			
+			List<ComplaintStageDetailsDto> complaintStageDetails=new ArrayList<>();
+			
+			for (ComplaintStageDetailsModel stageModel : complaintModel.getComplaintsDetails()) {
+				ComplaintStageDetailsDto complaintStageDetailsDto=new ComplaintStageDetailsDto();
+				complaintStageDetailsDto.setComplaintStageDetailId(stageModel.getComplaintStageDetailId());
+				complaintStageDetailsDto.setDescription(stageModel.getDescription());
+				
+				StageModel stageModel2=stageDao.findOne(stageModel.getStage().getStageId());
+				
+				if(stageModel2!=null) {
+					StageDto stageDto=new StageDto();
+					stageDto.setStageId(stageModel2.getStageId());
+					stageDto.setStageDescription(stageModel2.getStageDescription());
+					stageDto.setStageName(stageModel2.getStageName());
+					
+					complaintStageDetailsDto.setStage(stageDto);
+				}
+				
+				List<ImageDto> images=new ArrayList<>();
+				
+				for (ImageModel imageModel : stageModel.getImages()) {
+					ImageDto imageDto=new ImageDto();
+					imageDto.setImageId(imageModel.getImageId());
+					imageDto.setImagePath(imageModel.getImagePath());
+					images.add(imageDto);
+				}
+				
+				complaintStageDetailsDto.setImages(images);
+				
+				complaintStageDetails.add(complaintStageDetailsDto);
+			}
+			
+			complaintDto.setComplaintsDetails(complaintStageDetails);
 		}
 		return complaintDto;
 	}

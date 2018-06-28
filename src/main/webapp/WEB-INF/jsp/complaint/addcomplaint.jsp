@@ -240,6 +240,7 @@
 	<script src="../assets/js/core/jquery.min.js"></script>
 	<script src="../assets/js/core/popper.min.js"></script>
 	<script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+	<script src="../assets/js/plugins/bootstrap-notify.js"></script>
 
 	<script>
 	
@@ -347,10 +348,10 @@
 				success : function(result) {
 					
 					if(result == 200){
-						alert("Success");
+						showNotification('bottom','right','success','Success');
 						$('#add_complaint_form')[0].reset();
 					}else{
-						alert("Fail to send");
+						showNotification('bottom','right','warning','Fail');
 					}
 					
 				},
@@ -360,6 +361,25 @@
 			});
 			
 		}
+		
+		function showNotification(from, align,type,message) {
+	        type = ['', 'info', 'danger','success', 'warning', 'rose', 'primary'];
+
+	        color = Math.floor((Math.random() * 6) + 1);
+
+	        $.notify({
+	            icon: "notifications",
+	            message: message
+
+	        }, {
+	            type: 'success',
+	            timer: 3000,
+	            placement: {
+	                from: from,
+	                align: align
+	            }
+	        });
+	    }
 		
 	</script>
 </body>
