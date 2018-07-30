@@ -15,6 +15,8 @@ public interface ComplaintService {
 	
 	public String updateComplaint(ComplaintDto complaintDto,MultipartFile[] multipartFiles)throws Exception;
 	
+	public String updateComplaint(ComplaintDto complaintDto)throws Exception;
+	
 	public String updateComplaintStatus(ArrayList<Integer> idList)throws Exception;
 	
 	public String uploadImage(MultipartFile multipartFile,Integer complaintId,ComplaintStageDetailsModel complaintStageDetailsModel)throws Exception;

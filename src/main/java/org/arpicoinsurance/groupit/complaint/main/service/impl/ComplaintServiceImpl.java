@@ -157,6 +157,7 @@ public class ComplaintServiceImpl implements ComplaintService{
 			complaintDto.setComplaintStatus(complaintModel.getComplaintStatus());
 			complaintDto.setComplaintType(complaintModel.getComplaintType());
 			complaintDto.setComplaintSubject(complaintModel.getComplaintSubject());
+			complaintDto.setComplaintCreateDate(new SimpleDateFormat("yyyy-MM-dd").format(complaintModel.getCreateDate()));
 			
 			complaintDtos.add(complaintDto);
 		}
@@ -312,7 +313,7 @@ public class ComplaintServiceImpl implements ComplaintService{
 			LocalDate nowdateTime=LocalDate.now();
 			LocalDate dateTime=LocalDate.parse(dateFormat.format(complaintModel.getCreateDate()));
 			
-			long diff=ChronoUnit.DAYS.between(nowdateTime, dateTime);
+			long diff=ChronoUnit.DAYS.between(dateTime, nowdateTime);
 			
 			if(diff <= 7) {
 				customerModel=complaintModel.getCustomer();
@@ -453,6 +454,18 @@ public class ComplaintServiceImpl implements ComplaintService{
 			complaintDto.setComplaintsDetails(complaintStageDetails);
 		}
 		return complaintDto;
+	}
+
+	@Override
+	public String updateComplaint(ComplaintDto complaintDto) throws Exception {
+		ComplaintModel complaintModel=complaintDao.findOne(complaintDto.getComplaintId());
+		
+		if(complaintModel!=null) {
+			complaintModel.setComplaintStatus(AppConstant.COMPLAINT_STATUS_FULLY);
+			return complaintDao.save(complaintModel)!=null ? "200":"204";
+		}
+		
+		return "204";
 	}
 
 }
