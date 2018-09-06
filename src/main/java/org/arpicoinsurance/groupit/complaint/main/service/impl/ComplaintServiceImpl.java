@@ -149,6 +149,8 @@ public class ComplaintServiceImpl implements ComplaintService{
 			
 			complaintDto.setCustomerDto(customerDto);
 			complaintDto.setCategoryDto(categoryDto);
+			complaintDto.setCustomerId(customerDto.getCustomerId());
+			complaintDto.setCategoryId(categoryDto.getCategoryId());
 			complaintDto.setComplaintAction(complaintModel.getComplaintAction());
 			complaintDto.setComplaintId(complaintModel.getComplaintId());
 			complaintDto.setComplaintMessage(complaintModel.getComplaintMessage());
@@ -160,6 +162,7 @@ public class ComplaintServiceImpl implements ComplaintService{
 			complaintDto.setComplaintCreateDate(new SimpleDateFormat("yyyy-MM-dd").format(complaintModel.getCreateDate()));
 			
 			complaintDtos.add(complaintDto);
+			
 		}
 		
 		return complaintDtos;
@@ -184,7 +187,7 @@ public class ComplaintServiceImpl implements ComplaintService{
 				complaintModel.setUpdateDate(new SimpleDateFormat("yyyy-MM-dd").parse(existComplaintDto.getComplaintuUpdateDate()));
 			}
 			
-			if(existComplaintDto.getAcknowledgementDate() != null) {
+			if(existComplaintDto.getAcknowledgementDate() == null) {
 				complaintModel.setAcknowledgementDate(new Date());
 			}else {
 				complaintModel.setAcknowledgementDate(new SimpleDateFormat("yyyy-MM-dd").parse(existComplaintDto.getAcknowledgementDate()));
@@ -315,7 +318,41 @@ public class ComplaintServiceImpl implements ComplaintService{
 			
 			long diff=ChronoUnit.DAYS.between(dateTime, nowdateTime);
 			
-			if(diff <= 7) {
+			if(complaintStatus.equals(AppConstant.COMPLAINT_STATUS_NEW)) {
+				if(diff <= 7) {
+					customerModel=complaintModel.getCustomer();
+					CustomerDto customerDto=new CustomerDto();
+					
+					customerDto.setCustomerId(customerModel.getCustomerId());
+					customerDto.setCustomerEmail(customerModel.getCustomerEmail());
+					customerDto.setCustomerMobile(customerModel.getCustomerMobile());
+					customerDto.setCustomerName(customerModel.getCustomerName());
+					customerDto.setCustomerNic(customerModel.getCustomerNic());
+					
+					categoryModel=complaintModel.getCategory();
+					CategoryDto categoryDto=new CategoryDto();
+					
+					categoryDto.setCategoryId(categoryModel.getCategoryId());
+					categoryDto.setCategoryName(categoryModel.getCategoryName());
+					categoryDto.setIsActive(categoryModel.getIsActive());
+					
+					ComplaintDto complaintDto=new ComplaintDto();
+					
+					complaintDto.setCustomerDto(customerDto);
+					complaintDto.setCategoryDto(categoryDto);
+					complaintDto.setComplaintAction(complaintModel.getComplaintAction());
+					complaintDto.setComplaintId(complaintModel.getComplaintId());
+					complaintDto.setComplaintMessage(complaintModel.getComplaintMessage());
+					complaintDto.setComplaintReference(complaintModel.getComplaintReference());
+					complaintDto.setComplaintRootCause(complaintModel.getComplaintRootCause());
+					complaintDto.setComplaintStatus(complaintModel.getComplaintStatus());
+					complaintDto.setComplaintType(complaintModel.getComplaintType());
+					complaintDto.setComplaintSubject(complaintModel.getComplaintSubject());
+					complaintDto.setComplaintCreateDate(new SimpleDateFormat("yyyy-MM-dd").format(complaintModel.getCreateDate()));
+					//complaintDto.setAcknowledgementDate(new SimpleDateFormat("yyyy-MM-dd").format(complaintModel.getAcknowledgementDate()));
+					complaintDtos.add(complaintDto);
+				}
+			}else {
 				customerModel=complaintModel.getCustomer();
 				CustomerDto customerDto=new CustomerDto();
 				
@@ -348,6 +385,7 @@ public class ComplaintServiceImpl implements ComplaintService{
 				//complaintDto.setAcknowledgementDate(new SimpleDateFormat("yyyy-MM-dd").format(complaintModel.getAcknowledgementDate()));
 				complaintDtos.add(complaintDto);
 			}
+			
 			
 			
 		}
@@ -461,7 +499,7 @@ public class ComplaintServiceImpl implements ComplaintService{
 		ComplaintModel complaintModel=complaintDao.findOne(complaintDto.getComplaintId());
 		
 		if(complaintModel!=null) {
-			complaintModel.setComplaintStatus(AppConstant.COMPLAINT_STATUS_FULLY);
+			complaintModel.setComplaintStatus(complaintDto.getComplaintStatus());
 			return complaintDao.save(complaintModel)!=null ? "200":"204";
 		}
 		

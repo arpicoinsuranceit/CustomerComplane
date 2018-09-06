@@ -12,4 +12,6 @@ public interface ComplaintStageDetailsDao extends CrudRepository<ComplaintStageD
 	public ComplaintStageDetailsModel findByComplaintAndStage(ComplaintModel complaint,StageModel stage)throws Exception;
 	
 	public List<ComplaintStageDetailsModel> findByStage(StageModel stage)throws Exception;
+	
+	public List<ComplaintStageDetailsModel> findByComplaintOrderByCreateDateDesc(ComplaintModel complaint)throws Exception;
 }
