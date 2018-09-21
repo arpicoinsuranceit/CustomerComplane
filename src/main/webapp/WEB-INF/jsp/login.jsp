@@ -13,10 +13,7 @@
 <link rel="icon" href="../assets/img/develop.gif">
 <title>Customer Complaint System</title>
 <!--     Fonts and icons     -->
-<link rel="stylesheet" type="text/css"
-	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
 <link rel="stylesheet"
 	href="../assets/css/material-dashboard.css?v=2.0.0">
 <!-- Documentation extras -->
@@ -37,7 +34,11 @@
 						</div>
 						<h2>Sign in</h2>
 						<h5>with your Arpico Insurance Account</h5>
-						<form id="signInForm" name="signInForm">
+						<form id="signInForm" name="signInForm" method="post" action="/login">
+							<div style="width: 100%;height: 20px;text-align: center;color: red;padding: 5px;">
+								${login_error}
+							</div>
+							
 							<div class="row">
 								<div class="col-md-12">
 									<div class="form-group">
@@ -57,8 +58,9 @@
 									</div>
 								</div>
 							</div>
-							<button type="button" class="btn btn-blue pull-right"
-								id="signInBtn" onclick="signIn()">SIGN IN</button>
+							
+							<input type="submit" class="btn btn-blue pull-right"
+								id="signInBtn" value="SIGN IN">
 						</form>
 					</div>
 				</div>
@@ -74,36 +76,15 @@
 
 	<script>
 	
-	function signIn() {
+	/*function signIn() {
 		
 		if(($("#userName").val() != "" && $("#userName").val() != " ") && ($("#password").val() != "" &&  $("#password").val() != " ")){
 			$.ajax({
 				type : "POST",
-				url : "http://localhost:8086/login",
-				data : {userName:$("#userName").val(),password:$("#password").val()},
+				url : "/signin",
+				data : {userName:$("#userName").val(),password:$("#password").val(),subSbu:"3"},
 				success : function(result) {
 					console.log(result);
-					
-					if (result.inactive === true) {
-						alert("You have no authorized to login to system");
-						return;
-					} else if (result.login === false){
-						alert("You have entered username or password incorrectly");
-						return;
-					} else if (result.lock === true){
-						alert("Your account has been locked");
-						return;
-					} else if (result.expired === true){
-						alert("Your account has been expired. Please reset your password.");
-						return;
-					} else if (result.jwtToken === "" || result.jwtToken === null){
-						alert("You have entered username or password incorrectly");
-						return;
-					} else {
-						if((result.jwtToken !== "" || result.jwtToken !== null) && result.login === true){
-							window.location.replace("/home");
-						}
-					}
 					
 				},
 				error : function(result) {
@@ -116,7 +97,7 @@
 		}
 		
 		
-	}	
+	}	*/
 	
 	</script>
 </body>

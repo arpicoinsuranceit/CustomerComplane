@@ -1,5 +1,6 @@
 package org.arpicoinsurance.groupit.complaint.main.dto;
 
+import java.util.List;
 import org.arpicoinsurance.groupit.complaint.main.util.AppConstant;
 
 public class LoginResponseDto {
@@ -10,9 +11,11 @@ public class LoginResponseDto {
 	private boolean isLock = AppConstant.FALSE;
 	private boolean isExpired = AppConstant.FALSE;
 	private boolean isNeedChange = AppConstant.FALSE;
-	
+
 	private String jwtToken = AppConstant.NO_VALUE;
+	private String userName = AppConstant.NO_VALUE;
 	private Integer failCount = AppConstant.ZERO;
+	private List<MenuDto> menuDtos;
 	
 	public boolean isLogin() {
 		return isLogin;

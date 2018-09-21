@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class ComplaintController {
@@ -35,17 +36,17 @@ public class ComplaintController {
 	private ImageService imageService;
 
 	@RequestMapping("/complaint")
-	public String viewComplaintPage() {
+	public String viewComplaintPage(ModelAndView modelAndView) {
 		return "complaint/complaint";
 	}
 
 	@RequestMapping("/addcomplaint")
-	public String viewAddComplaintPage() {
+	public String viewAddComplaintPage(ModelAndView modelAndView) {
 		return "complaint/addcomplaint";
 	}
 
 	@RequestMapping("/updatecomplaint/{id}")
-	public String viewUpdateComplaintPage(@PathVariable Integer id, HttpSession httpSession) {
+	public String viewUpdateComplaintPage(@PathVariable Integer id, HttpSession httpSession,ModelAndView modelAndView) {
 		System.out.println("called update ...");
 		try {
 			ComplaintDto complaintDto = complaintService.findByComplaintId(id);
@@ -56,11 +57,12 @@ public class ComplaintController {
 			e.printStackTrace();
 		}
 		httpSession.setAttribute("editId", id);
+		
 		return "complaint/updatecomplaint";
 	}
 
 	@RequestMapping("/viewcomplaint/{id}")
-	public String viewComplaintPage(@PathVariable Integer id, HttpSession httpSession) {
+	public String viewComplaintPage(@PathVariable Integer id, HttpSession httpSession,ModelAndView modelAndView) {
 		System.out.println("called view ...");
 		try {
 			ComplaintDto complaintDto = complaintService.findByComplaintId(id);
@@ -71,6 +73,7 @@ public class ComplaintController {
 			e.printStackTrace();
 		}
 		httpSession.setAttribute("viewId", id);
+		
 		return "complaint/viewcomplaint";
 	}
 
@@ -92,13 +95,13 @@ public class ComplaintController {
 			entity.put("subject", complaintDto.getComplaintSubject());
 			entity.put("message", complaintDto.getComplaintMessage());
 			entity.put("edit",
-					"<button type=\"button\" rel=\"tooltip\" title=\"Edit Task\" onclick=\"editComplaint('"
+					"<button type=\"button\" rel=\"tooltip\" title=\"Edit\" onclick=\"editComplaint('"
 							+ complaintDto.getComplaintId()
-							+ "')\" class=\"btn btn-blue btn-link btn-sm\"> <i class=\"material-icons\">edit</i>"
+							+ "')\" class=\"btn btn-blue btn-link btn-sm\" style=\"color:black;\"> <i class=\"fa fa-pencil-square\" aria-hidden=\"true\"></i>"
 							+ "</button>");
 			entity.put("view", "<button type=\"button\" rel=\"tooltip\" title=\"View\" onclick=\"viewComplaint('"
 					+ complaintDto.getComplaintId()
-					+ "')\" class=\"btn btn-blue btn-link btn-sm\"> <i class=\"material-icons\">view_headline</i>"
+					+ "')\" class=\"btn btn-blue btn-link btn-sm\" style=\"color:black;\"> <i class=\"fa fa-th-list\" aria-hidden=\"true\"></i>"
 					+ "</button>");
 			complaintList.add(entity);
 		}

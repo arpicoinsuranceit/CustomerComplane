@@ -28,7 +28,7 @@ public class AppConstant {
     
     public static final String COMPLAINT_STAGE_NEW="NEW";
     
-    public static final String LOGIN_REST_URL="/";
+    public static final String LOGIN_REST_URL="http://localhost:8086/login";
     
     
 }

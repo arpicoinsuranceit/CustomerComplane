@@ -15,10 +15,7 @@
 <link rel="icon" href="../assets/img/develop.gif">
 <title>Customer Complaint System</title>
 <!--     Fonts and icons     -->
-<link rel="stylesheet" type="text/css"
-	href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
 <link rel="stylesheet"
 	href="../assets/css/material-dashboard.css?v=2.0.0">
 <!-- Documentation extras -->
@@ -26,14 +23,15 @@
 <link href="../assets/assets-for-demo/demo.css" rel="stylesheet" />
 
 <link href="../assets/css/custom.css" rel="stylesheet" />
-<!-- iframe removal -->
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
+
 </head>
 <body>
 	<nav
 		class="navbar navbar-expand-lg navbar-transparent  navbar-absolute fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-wrapper">
-			<a class="navbar-brand" href="#pablo">Dashboard</a>
+			<a class="navbar-brand" href="#pablo"><c:out value="${param.topic}"/></a>
 		</div>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navigation" aria-controls="navigation-index"
@@ -48,7 +46,7 @@
 			<ul class="navbar-nav">
 
 				<li class="nav-item"><a class="nav-link" href=""> A.B.
-						Perera <i class="material-icons">person</i>
+						Perera <i class="fa fa-user" aria-hidden="true"></i>
 				</a></li>
 			</ul>
 		</div>
