@@ -84,8 +84,8 @@
 														
 													</div>
 													<div class="card-footer">
-														<div class="stats">
-															Customer Complaints
+														<div class="stats" style="cursor: pointer;color: blue;">
+															<a onclick="customerComplaintReport()">Customer Complaints</a>
 														</div>
 													</div>
 												</div>
@@ -99,8 +99,8 @@
 														</div>
 													</div>
 													<div class="card-footer">
-														<div class="stats">
-															Performance <br> Report
+														<div class="stats" style="cursor: pointer;color: blue;">
+															<a onclick="performanceReport()">Performance <br> Report</a>
 														</div>
 													</div>
 												</div>
@@ -114,8 +114,8 @@
 														</div>
 													</div>
 													<div class="card-footer">
-														<div class="stats">
-															Age Analysis Of Outstanding Complaints
+														<div class="stats" style="cursor: pointer;color: blue;">
+															<a onclick="ageAnalysisReport()">Age Analysis Of Outstanding Complaints</a>
 														</div>
 													</div>
 												</div>
@@ -129,8 +129,8 @@
 														</div>
 													</div>
 													<div class="card-footer">
-														<div class="stats">
-															Root Cause Analysis
+														<div class="stats" style="cursor: pointer;color: blue;">
+															<a onclick="rootCauseAnalysisReport()">Root Cause Analysis</a>
 														</div>
 													</div>
 												</div>
@@ -161,6 +161,7 @@
 	<script type="text/javascript"
 		src="../assets/datatable/datatables.min.js"></script>
 	<script src="../assets/js/bootstrap-datepicker.js"></script>
+	<script src="../assets/js/plugins/bootstrap-notify.js"></script>
 
 	<script>
 		function addComplaint() {
@@ -176,6 +177,116 @@
 			//alert(id);
 			window.location.replace("/viewcomplaint/" + id);
 		}
+		
+		function customerComplaintReport(){
+			
+			if($("#from_date").val() != "" && $("#to_date").val() != ""){
+				var from_date=$("#from_date").val();
+				var to_date=$("#to_date").val();
+				
+				$.ajax({
+					type : "POST",
+					url : "/report_customer_complaints",
+					data : {from_date : from_date , to_date : to_date },
+					success : function(result) {
+						window.open(result);
+					},
+					error : function(result) {
+						console.log(result);
+						alert(result);
+					}
+				});
+			}else{
+				showNotification('bottom','right','warning','Please Enter From Date And To Date');
+			}
+		}
+		
+		function performanceReport(){
+			
+			var from_date=$("#from_date").val();
+			var to_date=$("#to_date").val();
+			
+			window.open("report/performance_report");
+			
+			/*$.ajax({
+				type : "POST",
+				url : "/report_customer_complaints",
+				data : {from_date : from_date , to_date : to_date },
+				success : function(result) {
+					window.open(result);
+				},
+				error : function(result) {
+					console.log(result);
+					alert(result);
+				}
+			});*/
+		}
+		
+		function ageAnalysisReport(){
+			
+			var from_date=$("#from_date").val();
+			var to_date=$("#to_date").val();
+			
+			window.open("report/age_analysis_report");
+			
+			/*$.ajax({
+				type : "POST",
+				url : "/report_customer_complaints",
+				data : {from_date : from_date , to_date : to_date },
+				success : function(result) {
+					window.open(result);
+				},
+				error : function(result) {
+					console.log(result);
+					alert(result);
+				}
+			});*/
+		}
+		
+		
+		function rootCauseAnalysisReport(){
+			
+			if($("#from_date").val() != "" && $("#to_date").val() != ""){
+			
+				var from_date=$("#from_date").val();
+				var to_date=$("#to_date").val();
+				
+				$.ajax({
+					type : "POST",
+					url : "/rootcause_analysis_report",
+					data : {from_date : from_date , to_date : to_date },
+					success : function(result) {
+						window.open(result);
+					},
+					error : function(result) {
+						console.log(result);
+					}
+				});
+				
+			}else{
+				showNotification('bottom','right','warning','Please Enter From Date And To Date');
+			}
+		}
+		
+		function showNotification(from, align,type,message) {
+	        //type = ['', 'info', 'danger','success', 'warning', 'rose', 'primary'];
+
+	        color = Math.floor((Math.random() * 6) + 1);
+
+	        $.notify({
+	            icon: "",
+	            message: message
+
+	        }, {
+	            type: type,
+	            timer: 3000,
+	            placement: {
+	                from: from,
+	                align: align
+	            }
+	        });
+	    }
+		
 	</script>
 </body>
 

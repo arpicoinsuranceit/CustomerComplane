@@ -300,7 +300,7 @@
 						showNotification('bottom','right','success','Success');
 						$('#update_complaint_form')[0].reset();
 					}else{
-						showNotification('bottom','right','warning','Fail');
+						showNotification('bottom','right','danger','Fail');
 					}
 					
 				},
@@ -317,11 +317,11 @@
 	        color = Math.floor((Math.random() * 6) + 1);
 
 	        $.notify({
-	            icon: "notifications",
+	            icon: "",
 	            message: message
 
 	        }, {
-	            type: 'success',
+	            type: type,
 	            timer: 3000,
 	            placement: {
 	                from: from,
