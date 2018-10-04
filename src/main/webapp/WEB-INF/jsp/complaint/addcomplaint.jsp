@@ -8,15 +8,15 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<!-- Favicons -->
 	<link rel="apple-touch-icon" href="../assets/img/develop.gif">
-	<link rel="icon" href="../assets/img/develop.gif">
+	<link rel="icon" href="${path}/assets/img/develop.gif">
 	<title>Customer Complaint System</title>
 	<!--     Fonts and icons     -->
-	<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
-	<link rel="stylesheet" href="../assets/css/material-dashboard.css?v=2.0.0">
-	<link href="../assets/assets-for-demo/demo.css" rel="stylesheet" />
+	<link rel="stylesheet" href="${path}/assets/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="${path}/assets/css/material-dashboard.css?v=2.0.0">
+	<link href="${path}/assets/assets-for-demo/demo.css" rel="stylesheet" />
 	<!-- datatable -->
-	<link rel="stylesheet" type="text/css" href="../assets/datatable/datatables.min.css"/>
-	<link href="../assets/css/custom.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="${path}/assets/datatable/datatables.min.css"/>
+	<link href="${path}/assets/css/custom.css" rel="stylesheet" />
 </head>
 
 <body onload="loadCategory()">
@@ -62,7 +62,7 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Nic *</label>
-                                                    <input type="text" class="form-control" id="customerNic" name="customerNic">
+                                                    <input type="text" class="form-control" id="customerNic" name="customerNic" onblur="loadPolicyNumbers();">
                                                 </div>
                                             </div>
                                         </div>
@@ -85,7 +85,8 @@
                                         	<div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Reference * (policy no)</label>
-                                                    <input type="text" class="form-control" id="polNo" name="polNo">
+                                                    <select type="text" class="form-control" id="polNo" name="polNo">
+                                                    </select>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -139,10 +140,10 @@
 
 
 	<!--   Core JS Files   -->
-	<script src="../assets/js/core/jquery.min.js"></script>
-	<script src="../assets/js/core/popper.min.js"></script>
-	<script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-	<script src="../assets/js/plugins/bootstrap-notify.js"></script>
+	<script src="${path}/assets/js/core/jquery.min.js"></script>
+	<script src="${path}/assets/js/core/popper.min.js"></script>
+	<script src="${path}/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+	<script src="${path}/assets/js/plugins/bootstrap-notify.js"></script>
 
 	<script>
 	
@@ -207,7 +208,7 @@
 		function loadCategory(){
 			$.ajax({
 				type : "GET",
-				url : "/view_category",
+				url : "${path}/view_category",
 				success : function(result) {
 					var category = document.getElementById('comCategory');
 					for(var i in result){
@@ -241,7 +242,7 @@
 			
 			$.ajax({
 				type : "POST",
-				url : "/send_complaint",
+				url : "${path}/send_complaint",
 				data : formData,
 				enctype: 'multipart/form-data',
 				processData: false,
@@ -258,16 +259,75 @@
 					
 				},
 				error : function(result) {
-					alert(result);
+					showNotification('bottom','right','danger',result);
 				}
 			});
 			
 		}
 		
-		function showNotification(from, align,type,message) {
-	        type = ['', 'info', 'danger','success', 'warning', 'rose', 'primary'];
+		
+		function loadPolicyNumbers(){
+			
+			var nic=$("#customerNic").val();
+			
+			if(!(nic.length==12) && !(nic.length==10) ){
+				
+	            showNotification('bottom','right','warning',"Nic Invalid..");
+	            return;
+	            
+	        }else{
+	        	
+	        	if(nic.length==10){
+		            var patt= new RegExp('^\\d{9}[v,V,x,X]{1}');
+		            if(patt.test(nic)){
+		                //nic=nic.substring(0,nic.length-1);
+		            }else{
+		            	showNotification('bottom','right','warning',"Nic Invalid..");
+		                return;
+		            }
+		            
+		        }
 
-	        color = Math.floor((Math.random() * 6) + 1);
+		        if(nic.length==12){
+		            var patt= new RegExp('^\\d{12}');
+		            if(patt.test(nic)){
+
+		            }else{
+		            	showNotification('bottom','right','warning',"Nic Invalid..");
+		                return;
+		            }
+		            
+		        }
+		        
+	        }
+			
+			$.ajax({
+				type : "GET",
+				url : "${path}/getPolicyNumbers/"+nic,
+				success : function(result) {
+					
+					console.log(result);
+					
+					if(result != null){
+						var reference = document.getElementById('polNo');
+						for(var i in result){
+							reference.options.add(new Option(result[i], result[i]));
+						}
+					}
+					
+				},
+				error : function(result) {
+					showNotification('bottom','right','danger',result);
+				}
+			});
+			
+
+		}
+		
+		function showNotification(from, align,type,message) {
+	       // type = ['', 'info', 'danger','success', 'warning', 'rose', 'primary'];
+
+	        //color = Math.floor((Math.random() * 6) + 1);
 
 	        $.notify({
 	            icon: "",

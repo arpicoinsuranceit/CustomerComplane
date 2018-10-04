@@ -9,18 +9,18 @@
 	name="viewport" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <!-- Favicons -->
-<link rel="apple-touch-icon" href="../assets/img/develop.gif">
-<link rel="icon" href="../assets/img/develop.gif">
+<link rel="apple-touch-icon" href="${path}/assets/img/develop.gif">
+<link rel="icon" href="${path}/assets/img/develop.gif">
 <title>Customer Complaint System</title>
 <!--     Fonts and icons     -->
-<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+<link rel="stylesheet" href="${path}/assets/css/font-awesome.min.css" />
 <link rel="stylesheet"
-	href="../assets/css/material-dashboard.css?v=2.0.0">
-<link href="../assets/assets-for-demo/demo.css" rel="stylesheet" />
+	href="${path}/assets/css/material-dashboard.css?v=2.0.0">
+<link href="${path}/assets/assets-for-demo/demo.css" rel="stylesheet" />
 <!-- datatable -->
 <link rel="stylesheet" type="text/css"
-	href="../assets/datatable/datatables.min.css" />
-<link href="../assets/css/custom.css" rel="stylesheet" />
+	href="${path}/assets/datatable/datatables.min.css" />
+<link href="${path}/assets/css/custom.css" rel="stylesheet" />
 </head>
 
 <body class="">
@@ -154,29 +154,16 @@
 
 
 	<!--   Core JS Files   -->
-	<script src="../assets/js/core/jquery.min.js"></script>
-	<script src="../assets/js/core/popper.min.js"></script>
-	<script src="../assets/js/bootstrap-material-design.js"></script>
-	<script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+	<script src="${path}/assets/js/core/jquery.min.js"></script>
+	<script src="${path}/assets/js/core/popper.min.js"></script>
+	<script src="${path}/assets/js/bootstrap-material-design.js"></script>
+	<script src="${path}/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 	<script type="text/javascript"
-		src="../assets/datatable/datatables.min.js"></script>
-	<script src="../assets/js/bootstrap-datepicker.js"></script>
-	<script src="../assets/js/plugins/bootstrap-notify.js"></script>
+		src="${path}/assets/datatable/datatables.min.js"></script>
+	<script src="${path}/assets/js/bootstrap-datepicker.js"></script>
+	<script src="${path}/assets/js/plugins/bootstrap-notify.js"></script>
 
 	<script>
-		function addComplaint() {
-			window.location.replace("/addcomplaint");
-		}
-
-		function editComplaint(id) {
-			//alert(id);
-			window.location.replace("/updatecomplaint/" + id);
-		}
-
-		function viewComplaint(id) {
-			//alert(id);
-			window.location.replace("/viewcomplaint/" + id);
-		}
 		
 		function customerComplaintReport(){
 			
@@ -186,7 +173,7 @@
 				
 				$.ajax({
 					type : "POST",
-					url : "/report_customer_complaints",
+					url : "${path}/report_customer_complaints",
 					data : {from_date : from_date , to_date : to_date },
 					success : function(result) {
 						window.open(result);
@@ -253,7 +240,7 @@
 				
 				$.ajax({
 					type : "POST",
-					url : "/rootcause_analysis_report",
+					url : "${path}/rootcause_analysis_report",
 					data : {from_date : from_date , to_date : to_date },
 					success : function(result) {
 						window.open(result);

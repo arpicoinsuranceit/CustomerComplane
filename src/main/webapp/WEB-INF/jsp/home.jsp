@@ -6,14 +6,14 @@
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<!-- Favicons -->
-	<link rel="apple-touch-icon" href="../assets/img/develop.gif">
-	<link rel="icon" href="../assets/img/develop.gif">
+	<link rel="apple-touch-icon" href="${path}/assets/img/develop.gif">
+	<link rel="icon" href="${path}/assets/img/develop.gif">
 	<title>Customer Complaint System</title>
 	<!--     Fonts and icons     -->
-	<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
-	<link rel="stylesheet" href="../assets/css/material-dashboard.css?v=2.0.0">
+	<link rel="stylesheet" href="${path}/assets/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="${path}/assets/css/material-dashboard.css?v=2.0.0">
 	
-	<link href="../assets/css/custom.css" rel="stylesheet" />
+	<link href="${path}/assets/css/custom.css" rel="stylesheet" />
 
 </head>
 <body class="">
@@ -165,11 +165,11 @@
 
 
 	<!--   Core JS Files   -->
-	<script src="../assets/js/core/jquery.min.js"></script>
-	<script src="../assets/js/core/popper.min.js"></script>
-	<script src="../assets/js/bootstrap-material-design.js"></script>
-	<script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
-	<script src="../assets/js/plugins/bootstrap-notify.js"></script>
+	<script src="${path}/assets/js/core/jquery.min.js"></script>
+	<script src="${path}/assets/js/core/popper.min.js"></script>
+	<script src="${path}/assets/js/bootstrap-material-design.js"></script>
+	<script src="${path}/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+	<script src="${path}/assets/js/plugins/bootstrap-notify.js"></script>
 
 	<script>
 		$(document).ready(function() {
@@ -183,7 +183,7 @@
 		function loadNewComplaints(){
 			$.ajax({
 				type : "POST",
-				url : "/search_complaint",
+				url : "${path}/search_complaint",
 				data : {complaintStatus : 'NEW'},
 				success : function(result) {
 					$("#tbody_newComplaints tr").remove();
@@ -230,7 +230,7 @@
 		function loadPartiallyResolve(){
 			$.ajax({
 				type : "POST",
-				url : "/search_complaint",
+				url : "${path}/search_complaint",
 				data : {complaintStatus : 'PARTIALLY RESOLVED'},
 				success : function(result) {
 					$("#tbody_partiallyComplaints tr").remove();
@@ -263,7 +263,7 @@
 		function loadFullyResolve(){
 			$.ajax({
 				type : "POST",
-				url : "/search_complaint",
+				url : "${path}/search_complaint",
 				data : {complaintStatus : 'FULLY RESOLVED'},
 				success : function(result) {
 					
@@ -278,7 +278,7 @@
 		function loadNotResolve(){
 			$.ajax({
 				type : "POST",
-				url : "/search_complaint",
+				url : "${path}/search_complaint",
 				data : {complaintStatus : 'NOT RESOLVED'},
 				success : function(result) {
 					$("#tbody_notResolvedComplaints tr").remove();
@@ -318,7 +318,7 @@
 			if(complaintIdArr.length > 0){
 				$.ajax({
 					type : "POST",
-					url : "/accept_complaint",
+					url : "${path}/accept_complaint",
 					data : {complaints : complaintIdArr},
 					traditional: true,
 					success : function(result) {
@@ -342,7 +342,7 @@
 	        color = Math.floor((Math.random() * 6) + 1);
 
 	        $.notify({
-	            icon: "notifications",
+	            icon: "",
 	            message: message
 
 	        }, {

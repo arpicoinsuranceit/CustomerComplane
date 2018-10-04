@@ -9,18 +9,18 @@
 	name="viewport" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <!-- Favicons -->
-<link rel="apple-touch-icon" href="../assets/img/develop.gif">
+<link rel="apple-touch-icon" href="${path}/assets/img/develop.gif">
 <link rel="icon" href="../assets/img/develop.gif">
 <title>Customer Complaint System</title>
 <!--     Fonts and icons     -->
-<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
+<link rel="stylesheet" href="${path}/assets/css/font-awesome.min.css" />
 <link rel="stylesheet"
-	href="../assets/css/material-dashboard.css?v=2.0.0">
+	href="${path}/assets/css/material-dashboard.css?v=2.0.0">
 <!-- Documentation extras -->
 <!-- CSS Just for demo purpose, don't include it in your project -->
 <!--<link href="../assets/assets-for-demo/demo.css" rel="stylesheet" />-->
 
-<link href="../assets/css/custom.css" rel="stylesheet" />
+<link href="${path}/assets/css/custom.css" rel="stylesheet" />
 <!-- iframe removal -->
 </head>
 <body>
@@ -34,7 +34,7 @@
 						</div>
 						<h2>Sign in</h2>
 						<h5>with your Arpico Insurance Account</h5>
-						<form id="signInForm" name="signInForm" method="post" action="/login">
+						<form id="signInForm" name="signInForm" method="post" action="${path}/login">
 							<div style="width: 100%;height: 20px;text-align: center;color: red;padding: 5px;">
 								${login_error}
 							</div>
@@ -69,10 +69,10 @@
 	</div>
 
 	<!--   Core JS Files   -->
-	<script src="../assets/js/core/jquery.min.js"></script>
-	<script src="../assets/js/core/popper.min.js"></script>
-	<script src="../assets/js/bootstrap-material-design.js"></script>
-	<script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+	<script src="${path}/assets/js/core/jquery.min.js"></script>
+	<script src="${path}/assets/js/core/popper.min.js"></script>
+	<script src="${path}/assets/js/bootstrap-material-design.js"></script>
+	<script src="${path}/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 
 	<script>
 	

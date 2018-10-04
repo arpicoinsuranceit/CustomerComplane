@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.arpicoinsurance.groupit.complaint.main.client.DashboardClient;
 import org.arpicoinsurance.groupit.complaint.main.dto.ComplaintDto;
 import org.arpicoinsurance.groupit.complaint.main.dto.ComplaintStageDetailsDto;
 import org.arpicoinsurance.groupit.complaint.main.dto.CustomerDto;
@@ -34,6 +36,9 @@ public class ComplaintController {
 
 	@Autowired
 	private ImageService imageService;
+	
+	@Autowired
+	private DashboardClient dashboardClient;
 
 	@RequestMapping("/complaint")
 	public String viewComplaintPage(ModelAndView modelAndView) {
@@ -154,6 +159,21 @@ public class ComplaintController {
 
 		return null;
 	}
+	
+	@RequestMapping(value = "/getPolicyNumbers/{nic}", method = RequestMethod.GET)
+	@ResponseBody
+	public List<String> getPolicyNumbers(@PathVariable("nic") String nic,HttpSession httpSession) {
+
+		try {
+			return dashboardClient.getPolicyNumbers(nic);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	
 
 	@RequestMapping(value = "/accept_complaint", method = RequestMethod.POST)
 	@ResponseBody

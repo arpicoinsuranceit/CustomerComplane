@@ -66,11 +66,26 @@ public class LoginResponseDto {
 		this.failCount = failCount;
 	}
 	
+	
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public List<MenuDto> getMenuDtos() {
+		return menuDtos;
+	}
+	public void setMenuDtos(List<MenuDto> menuDtos) {
+		this.menuDtos = menuDtos;
+	}
 	@Override
 	public String toString() {
 		return "LoginResponseDto [isLogin=" + isLogin + ", isInactive=" + isInactive + ", isFail=" + isFail
 				+ ", isLock=" + isLock + ", isExpired=" + isExpired + ", isNeedChange=" + isNeedChange + ", jwtToken="
-				+ jwtToken + ", failCount=" + failCount + "]";
+				+ jwtToken + ", userName=" + userName + ", failCount=" + failCount + ", menuDtos=" + menuDtos + "]";
 	}
+	
+	
 	
 }

@@ -12,25 +12,25 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 	<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c" %>
 	<!-- Favicons -->
-	<link rel="apple-touch-icon" href="../assets/img/develop.gif">
-	<link rel="icon" href="../assets/img/develop.gif">
+	<link rel="apple-touch-icon" href="${path}/assets/img/develop.gif">
+	<link rel="icon" href="${path}/assets/img/develop.gif">
 	<title>Customer Complaint System</title>
 	<!--     Fonts and icons     -->
-	<link rel="stylesheet" href="../assets/css/font-awesome.min.css" />
-	<link rel="stylesheet" href="../assets/css/material-dashboard.css?v=2.0.0">
+	<link rel="stylesheet" href="${path}/assets/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="${path}/assets/css/material-dashboard.css?v=2.0.0">
 	
-	<link href="../assets/css/custom.css" rel="stylesheet" />
+	<link href="${path}/assets/css/custom.css" rel="stylesheet" />
 	<!-- iframe removal -->
 </head>
 <body>
 	<div class="sidebar" data-color="ar-orange"
 			data-background-color="white"
-			data-image="../assets/img/sidebar-1.jpg">
+			data-image="${path}/assets/img/sidebar-1.jpg">
 
 
 	<div class="logo">
 				<a href="http://www.arpicoinsurance.com/"
-					class="simple-text logo-normal"><img src="assets/img/logo.png"
+					class="simple-text logo-normal"><img src="${path}/assets/img/logo.png"
 					style="width: 75%; height: 100px;" alt="ARPICO INSURANCE"></a>
 			</div>
 			<div class="sidebar-wrapper">
@@ -39,14 +39,14 @@
 					<c:choose>
 					    <c:when test="${param.cur_page eq 'Dashboard'}">
 					        <li class="nav-item active ">
-							<a class="nav-link" href="/home">
+							<a class="nav-link" href="${path}/home">
 							<i class="fa fa-tachometer" aria-hidden="true"></i>
 									<p>Dashboard</p>
 							</a></li>
 					    </c:when>
 					    <c:otherwise>
 					       	<li class="nav-item ">
-							<a class="nav-link" href="/home">
+							<a class="nav-link" href="${path}/home">
 							<i class="fa fa-tachometer" aria-hidden="true"></i>
 									<p>Dashboard</p>
 							</a></li>
@@ -56,7 +56,7 @@
 					<c:choose>
 					    <c:when test="${param.cur_page eq 'Complaints'}">
 					        <li class="nav-item active">
-								<a class="nav-link" href="/complaint"> 
+								<a class="nav-link" href="${path}/complaint"> 
 									<i class="fa fa-commenting" aria-hidden="true"></i>
 									<p>Customer Complaints</p>
 								</a>
@@ -64,7 +64,7 @@
 					    </c:when>
 					    <c:otherwise>
 					       	<li class="nav-item">
-								<a class="nav-link" href="/complaint"> 
+								<a class="nav-link" href="${path}/complaint"> 
 									<i class="fa fa-commenting" aria-hidden="true"></i>
 									<p>Customer Complaints</p>
 								</a>
@@ -75,13 +75,13 @@
 					<c:choose>
 					    <c:when test="${param.cur_page eq 'Reports'}">
 					        <li class="nav-item active"><a class="nav-link"
-								href="/report_main"> <i class="fa fa-bar-chart" aria-hidden="true"></i>
+								href="${path}/report_main"> <i class="fa fa-bar-chart" aria-hidden="true"></i>
 									<p>Reports</p>
 							</a></li>
 					    </c:when>
 					    <c:otherwise>
 					       	<li class="nav-item "><a class="nav-link"
-								href="/report_main"> <i class="fa fa-bar-chart" aria-hidden="true"></i>
+								href="${path}/report_main"> <i class="fa fa-bar-chart" aria-hidden="true"></i>
 									<p>Reports</p>
 							</a></li>
 					    </c:otherwise>
@@ -95,10 +95,10 @@
 		
 		
 		<!--   Core JS Files   -->
-	<script src="../assets/js/core/jquery.min.js"></script>
-	<script src="../assets/js/core/popper.min.js"></script>
-	<script src="../assets/js/bootstrap-material-design.js"></script>
-	<script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+	<script src="${path}/assets/js/core/jquery.min.js"></script>
+	<script src="${path}/assets/js/core/popper.min.js"></script>
+	<script src="${path}/assets/js/bootstrap-material-design.js"></script>
+	<script src="${path}/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
 
 </body>
 </html>
