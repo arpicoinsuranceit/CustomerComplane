@@ -62,7 +62,9 @@
                                             <div class="col-md-6">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Nic *</label>
-                                                    <input type="text" class="form-control" id="customerNic" name="customerNic" onblur="loadPolicyNumbers();">
+                                                    <!-- <input type="text" class="form-control" id="customerNic" name="customerNic" onblur="loadPolicyNumbers();">-->
+                                                    <input type="text" class="form-control" id="customerNic" name="customerNic" >
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -86,6 +88,7 @@
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Reference * (policy no)</label>
                                                     <select type="text" class="form-control" id="polNo" name="polNo">
+                                                    	<option value="12345">12345</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -116,10 +119,22 @@
                                         </div>
                                         
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-8">
                                                 <div class="form-group">
                                                     <label class="bmd-label-floating">Message</label>
                                                     <textarea class="form-control" id="comMessage" name="comMessage"></textarea>
+                                                </div>
+                                            </div>
+                                            
+                                        	<div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label class="bmd-label-floating">Mode Of Complaint</label>
+                                                    <select class="form-control" id="comMode" name="comMode">
+                                                    	<option value="OVERTHEPHONE">Over The Phone</option>
+                                                    	<option value="INWRITTEN">In Written</option>
+                                                    	<option value="EMAIL">Email</option>
+                                                    	<option value="POST">Post</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -250,11 +265,12 @@
 				cache: false,
 				success : function(result) {
 					
-					if(result == 200){
-						showNotification('bottom','right','success','Success');
-						$('#add_complaint_form')[0].reset();
-					}else{
+					if(result == 204){
 						showNotification('bottom','right','danger','Fail');
+					}else{
+						showNotification('bottom','right','success','Success <br> Reference No : '+result);
+						$('#add_complaint_form')[0].reset();
+						//window.location.reload();
 					}
 					
 				},

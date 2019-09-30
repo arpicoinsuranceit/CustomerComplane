@@ -10,7 +10,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.arpicoinsurance.groupit.complaint.main.client.DashboardClient;
 import org.arpicoinsurance.groupit.complaint.main.dto.ComplaintDto;
 import org.arpicoinsurance.groupit.complaint.main.dto.ComplaintStageDetailsDto;
 import org.arpicoinsurance.groupit.complaint.main.dto.CustomerDto;
@@ -37,8 +36,8 @@ public class ComplaintController {
 	@Autowired
 	private ImageService imageService;
 	
-	@Autowired
-	private DashboardClient dashboardClient;
+//	@Autowired
+//	private DashboardClient dashboardClient;
 
 	@RequestMapping("/complaint")
 	public String viewComplaintPage(ModelAndView modelAndView) {
@@ -91,6 +90,7 @@ public class ComplaintController {
 
 		for (ComplaintDto complaintDto : complaintDtos) {
 			Map<String, Object> entity = new HashMap<>();
+			entity.put("ref", complaintDto.getComplaintReferanceNo());
 			entity.put("name", complaintDto.getCustomerDto().getCustomerName());
 			entity.put("nic", complaintDto.getCustomerDto().getCustomerNic());
 			entity.put("email", complaintDto.getCustomerDto().getCustomerEmail());
@@ -123,7 +123,7 @@ public class ComplaintController {
 			@RequestParam("customerNic") String customerNic, @RequestParam("customerEmail") String customerEmail,
 			@RequestParam("customerMobile") String customerMobile, @RequestParam("polNo") String polNo,
 			@RequestParam("comCategory") String comCategory, @RequestParam("comSubject") String comSubject,
-			@RequestParam("comMessage") String comMessage, @RequestParam("attachment") MultipartFile[] multipartFile) {
+			@RequestParam("comMessage") String comMessage,@RequestParam("comMode") String comMode, @RequestParam("attachment") MultipartFile[] multipartFile) {
 
 		CustomerDto customerDto = new CustomerDto();
 		customerDto.setCustomerName(customerName);
@@ -136,6 +136,7 @@ public class ComplaintController {
 		complaintDto.setCategoryId(Integer.valueOf(comCategory));
 		complaintDto.setComplaintSubject(comSubject);
 		complaintDto.setComplaintMessage(comMessage);
+		complaintDto.setComplaintMode(comMode);
 
 		try {
 			return complaintService.saveComplaint(complaintDto, customerDto, multipartFile);
@@ -165,7 +166,7 @@ public class ComplaintController {
 	public List<String> getPolicyNumbers(@PathVariable("nic") String nic,HttpSession httpSession) {
 
 		try {
-			return dashboardClient.getPolicyNumbers(nic);
+			//return dashboardClient.getPolicyNumbers(nic);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -194,7 +195,7 @@ public class ComplaintController {
 			@RequestParam("customerNic") String customerNic, @RequestParam("customerEmail") String customerEmail,
 			@RequestParam("customerMobile") String customerMobile, @RequestParam("comRef") String polNo,
 			@RequestParam("comCategory") String comCategory, @RequestParam("comSubject") String comSubject,
-			@RequestParam("comMessage") String comMessage, @RequestParam("comStatus") String comStatus,
+			@RequestParam("comMessage") String comMessage,@RequestParam("comMode") String comMode, @RequestParam("comStatus") String comStatus,
 			@RequestParam("comRootCause") String comRootCause, @RequestParam("comAction") String comAction,
 			@RequestParam("comStage") String comStage, @RequestParam("comStageDesc") String comStageDesc,
 			@RequestParam("attachment") MultipartFile[] multipartFile, HttpSession httpSession) {
@@ -215,6 +216,7 @@ public class ComplaintController {
 		complaintDto.setComplaintStatus(comStatus);
 		complaintDto.setComplaintRootCause(comRootCause);
 		complaintDto.setComplaintAction(comAction);
+		complaintDto.setComplaintMode(comMode);
 
 		StageDto stageDto = new StageDto();
 		stageDto.setStageId(Integer.valueOf(comStage));

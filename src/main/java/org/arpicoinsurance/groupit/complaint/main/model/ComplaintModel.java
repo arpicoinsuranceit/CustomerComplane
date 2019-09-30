@@ -17,6 +17,7 @@ import javax.persistence.Table;
 @Table(name="complaint")
 public class ComplaintModel {
 	private Integer complaintId;
+	private String complaintReferanceNo;
 	private String complaintSubject;
 	private String complaintMessage;
 	private String complaintReference;
@@ -24,6 +25,7 @@ public class ComplaintModel {
 	private String complaintAction;
 	private String complaintStatus;
 	private String complaintType;
+	private String complaintMode;
 	private Date acknowledgementDate;
 	private Date createDate;
 	private Date updateDate;
@@ -44,30 +46,49 @@ public class ComplaintModel {
 	public void setComplaintId(Integer complaintId) {
 		this.complaintId = complaintId;
 	}
+
+	public String getComplaintReferanceNo() {
+		return complaintReferanceNo;
+	}
+	public void setComplaintReferanceNo(String complaintReferanceNo) {
+		this.complaintReferanceNo = complaintReferanceNo;
+	}
+	
+	public String getComplaintMode() {
+		return complaintMode;
+	}
+	public void setComplaintMode(String complaintMode) {
+		this.complaintMode = complaintMode;
+	}
+	
 	public String getComplaintSubject() {
 		return complaintSubject;
 	}
 	public void setComplaintSubject(String complaintSubject) {
 		this.complaintSubject = complaintSubject;
 	}
+	
 	public String getComplaintMessage() {
 		return complaintMessage;
 	}
 	public void setComplaintMessage(String complaintMessage) {
 		this.complaintMessage = complaintMessage;
 	}
+	
 	public String getComplaintReference() {
 		return complaintReference;
 	}
 	public void setComplaintReference(String complaintReference) {
 		this.complaintReference = complaintReference;
 	}
+	
 	public String getComplaintRootCause() {
 		return complaintRootCause;
 	}
 	public void setComplaintRootCause(String complaintRootCause) {
 		this.complaintRootCause = complaintRootCause;
 	}
+	
 	public String getComplaintAction() {
 		return complaintAction;
 	}
@@ -81,12 +102,14 @@ public class ComplaintModel {
 	public void setComplaintStatus(String complaintStatus) {
 		this.complaintStatus = complaintStatus;
 	}
+	
 	public String getComplaintType() {
 		return complaintType;
 	}
 	public void setComplaintType(String complaintType) {
 		this.complaintType = complaintType;
 	}
+	
 	@ManyToOne
 	public CustomerModel getCustomer() {
 		return customer;
@@ -94,6 +117,7 @@ public class ComplaintModel {
 	public void setCustomer(CustomerModel customer) {
 		this.customer = customer;
 	}
+	
 	@ManyToOne
 	public CategoryModel getCategory() {
 		return category;
@@ -116,28 +140,19 @@ public class ComplaintModel {
 	public void setAcknowledgementDate(Date acknowledgementDate) {
 		this.acknowledgementDate = acknowledgementDate;
 	}
+	
 	public Date getCreateDate() {
 		return createDate;
 	}
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
+	
 	public Date getUpdateDate() {
 		return updateDate;
 	}
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
 	}
-	@Override
-	public String toString() {
-		return "ComplaintModel [complaintId=" + complaintId + ", complaintSubject=" + complaintSubject
-				+ ", complaintMessage=" + complaintMessage + ", complaintReference=" + complaintReference
-				+ ", complaintRootCause=" + complaintRootCause + ", complaintAction=" + complaintAction
-				+ ", complaintStatus=" + complaintStatus + ", complaintType=" + complaintType + ", acknowledgementDate="
-				+ acknowledgementDate + ", createDate=" + createDate + ", updateDate=" + updateDate + ", customer="
-				+ customer + ", category=" + category + ", complaintsDetails=" + complaintsDetails + "]";
-	}
-	
-	
 	
 }

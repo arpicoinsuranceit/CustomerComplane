@@ -52,6 +52,7 @@
                             <div class="card">
                                 <div class="card-header card-header-pri" style="background-color: #224099;opacity: 0.8;">
                                     <h3 class="card-title">Update Complaint</h3>
+                                    <div>Reference No : <%= complaintDto.getComplaintReferanceNo() %></div>
                                 </div>
                                 <div class="card-body">
                                     <form name="update_complaint_form" id="update_complaint_form" enctype='multipart/form-data'>
@@ -110,12 +111,12 @@
                                                     <textarea class="form-control" id="comMessage" name="comMessage" readonly><%= complaintDto.getComplaintMessage() %></textarea>
                                                 </div>
 	                                        </div>
-                                            <!-- <div class="col-md-4">
+                                            <div class="col-md-4">
                                                 <div class="form-group">
-                                                    <label class="bmd-label-floating">Attachment </label>
-                                                    <div class="upload-image-preview1" style="width:100%;height: auto;background-color: lightgrey;border:1px dashed black;"> </div>
+                                                    <label class="bmd-label-floating">Complaint Mode </label>
+                                                    <input type="text" class="form-control" id="comMode" name="comMode" value=<%= complaintDto.getComplaintMode() %> readonly>
                                                 </div>
-                                            </div> -->
+                                            </div> 
                                             
                                         </div>
                                         <div class="row">

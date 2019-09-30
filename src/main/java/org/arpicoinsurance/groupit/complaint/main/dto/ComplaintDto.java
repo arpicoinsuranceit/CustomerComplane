@@ -7,6 +7,7 @@ import java.util.List;
 
 public class ComplaintDto {
 	private Integer complaintId;
+	private String complaintReferanceNo;
 	private String complaintSubject;
 	private String complaintMessage;
 	private String complaintReference;
@@ -17,6 +18,7 @@ public class ComplaintDto {
 	private String complaintCreateDate;
 	private String complaintuUpdateDate;
 	private String acknowledgementDate;
+	private String complaintMode;
 	
 	private Integer customerId;
 
@@ -33,6 +35,7 @@ public class ComplaintDto {
 	public void setComplaintId(Integer complaintId) {
 		this.complaintId = complaintId;
 	}
+	
 	public String getComplaintSubject() {
 		return complaintSubject;
 	}
@@ -128,6 +131,20 @@ public class ComplaintDto {
 	public void setComplaintuUpdateDate(String complaintuUpdateDate) {
 		this.complaintuUpdateDate = complaintuUpdateDate;
 	}
+
+	public String getComplaintReferanceNo() {
+		return complaintReferanceNo;
+	}
+	public void setComplaintReferanceNo(String complaintReferanceNo) {
+		this.complaintReferanceNo = complaintReferanceNo;
+	}
+
+	public String getComplaintMode() {
+		return complaintMode;
+	}
+	public void setComplaintMode(String complaintMode) {
+		this.complaintMode = complaintMode;
+	}
 	@Override
 	public String toString() {
 		return "ComplaintDto [complaintId=" + complaintId + ", complaintSubject=" + complaintSubject
@@ -138,9 +155,6 @@ public class ComplaintDto {
 				+ acknowledgementDate + ", customerId=" + customerId + ", categoryId=" + categoryId + ", customerDto="
 				+ customerDto + ", categoryDto=" + categoryDto + ", complaintsDetails=" + complaintsDetails + "]";
 	}
-	
-	
-	
 	
 	
 }

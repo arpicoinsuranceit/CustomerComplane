@@ -64,6 +64,7 @@
                                     <table class="table table-hover" id="complaint_table" style="width:100%">
                                         <thead class="text-warning">
 	                                        <tr>
+	                                        	<th>Reference No</th>
 	                                        	<th>Customer Name</th>
 	                                            <th>Nic</th>
 	                                            <th>Email</th>
@@ -106,6 +107,7 @@
             var table = $('#complaint_table').DataTable({
                 'ajax': '${path}/view_complaint_dt',
                 "columns": [
+                	{ "data": "ref" },
             	    { "data": "name" },
             	    { "data": "nic" },
             	    { "data": "email" },

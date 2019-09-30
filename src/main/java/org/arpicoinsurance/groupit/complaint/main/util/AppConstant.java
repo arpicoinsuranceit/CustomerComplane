@@ -13,7 +13,7 @@ public class AppConstant {
     public static final String LOGOUT_URL="/logout";
     public static final String ROOT_URL="/";
     public static final boolean FALSE = false;
-    public static final String IMAGE_UPLOAD_URL="E:/CCMImages/";
+    public static final String IMAGE_UPLOAD_URL="E:\\CCMImages\\";
     public static final String COMPLAINT_STATUS_NEW="NEW";
     public static final String COMPLAINT_STATUS_ACKNOWLEDGE="ACKNOWLEDGE";
     public static final String COMPLAINT_STATUS_PARTIALLY="PARTIALLY RESOLVED";
@@ -24,11 +24,13 @@ public class AppConstant {
     public static final String COMPLAINT_TYPE_INWRITING="INWRITING";
     public static final String COMPLAINT_TYPE_PHONE="PHONE";
     
+    public static final String COMPLAINT_SEQ="COMPLAINT";
+    
     public static final String COMPLAINT_STAGE_ACKNOWLEDGE="ACKNOWLEDGE";
     
     public static final String COMPLAINT_STAGE_NEW="NEW";
     
-    public static final String LOGIN_REST_URL="http://10.10.10.120:8084/UserManagement/login";
+    public static final String LOGIN_REST_URL="http://10.10.10.12:8088/login";
     
     public static final String DASHBOARD_REST_URL="http://localhost:8085/loadPolicyNumbers";
     

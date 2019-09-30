@@ -16,6 +16,7 @@ import org.arpicoinsurance.groupit.complaint.main.dao.ComplaintDao;
 import org.arpicoinsurance.groupit.complaint.main.dao.ComplaintStageDetailsDao;
 import org.arpicoinsurance.groupit.complaint.main.dao.CustomerDao;
 import org.arpicoinsurance.groupit.complaint.main.dao.ImageDao;
+import org.arpicoinsurance.groupit.complaint.main.dao.SequenceDao;
 import org.arpicoinsurance.groupit.complaint.main.dao.StageDao;
 import org.arpicoinsurance.groupit.complaint.main.dto.CategoryDto;
 import org.arpicoinsurance.groupit.complaint.main.dto.ComplaintDto;
@@ -28,6 +29,7 @@ import org.arpicoinsurance.groupit.complaint.main.model.ComplaintModel;
 import org.arpicoinsurance.groupit.complaint.main.model.ComplaintStageDetailsModel;
 import org.arpicoinsurance.groupit.complaint.main.model.CustomerModel;
 import org.arpicoinsurance.groupit.complaint.main.model.ImageModel;
+import org.arpicoinsurance.groupit.complaint.main.model.SequenceEntity;
 import org.arpicoinsurance.groupit.complaint.main.model.StageModel;
 import org.arpicoinsurance.groupit.complaint.main.service.ComplaintService;
 import org.arpicoinsurance.groupit.complaint.main.service.ComplaintStageDetailsService;
@@ -61,6 +63,9 @@ public class ComplaintServiceImpl implements ComplaintService{
 	@Autowired
 	private ComplaintStageDetailsService stageDetailsService;
 	
+	@Autowired
+	private SequenceDao sequenceDao;
+	
 
 	@Override
 	public String saveComplaint(ComplaintDto complaintDto,CustomerDto customerDto,MultipartFile[] multipartFiles) throws Exception {
@@ -75,6 +80,12 @@ public class ComplaintServiceImpl implements ComplaintService{
 		complaintModel.setComplaintStatus(AppConstant.COMPLAINT_STATUS_NEW);
 		complaintModel.setComplaintType(AppConstant.COMPLAINT_TYPE_INWRITING);
 		complaintModel.setCreateDate(new Date());
+		complaintModel.setComplaintMode(complaintDto.getComplaintMode());
+		SequenceEntity complaintSequence = sequenceDao.findFirstByNameOrderByCurrentValueDesc(AppConstant.COMPLAINT_SEQ); 
+		complaintSequence.setCurrentValue(complaintSequence.getCurrentValue() + complaintSequence.getIncrementValue());
+		Integer complaintReference = sequenceDao.save(complaintSequence).getCurrentValue(); 
+
+		complaintModel.setComplaintReferanceNo("Ref-"+complaintReference);
 		
 		CustomerModel  customerModel=new CustomerModel();
 		customerModel.setCustomerName(customerDto.getCustomerName());
@@ -116,7 +127,7 @@ public class ComplaintServiceImpl implements ComplaintService{
 			return "204";
 		}
 		
-		return "200";
+		return complaintModel.getComplaintReferanceNo();
 	}
 
 	@Override
@@ -160,6 +171,8 @@ public class ComplaintServiceImpl implements ComplaintService{
 			complaintDto.setComplaintType(complaintModel.getComplaintType());
 			complaintDto.setComplaintSubject(complaintModel.getComplaintSubject());
 			complaintDto.setComplaintCreateDate(new SimpleDateFormat("yyyy-MM-dd").format(complaintModel.getCreateDate()));
+			complaintDto.setComplaintReferanceNo(complaintModel.getComplaintReferanceNo());
+			complaintDto.setComplaintMode(complaintModel.getComplaintMode());
 			
 			complaintDtos.add(complaintDto);
 			
@@ -350,6 +363,8 @@ public class ComplaintServiceImpl implements ComplaintService{
 					complaintDto.setComplaintSubject(complaintModel.getComplaintSubject());
 					complaintDto.setComplaintCreateDate(new SimpleDateFormat("yyyy-MM-dd").format(complaintModel.getCreateDate()));
 					//complaintDto.setAcknowledgementDate(new SimpleDateFormat("yyyy-MM-dd").format(complaintModel.getAcknowledgementDate()));
+					complaintDto.setComplaintReferanceNo(complaintModel.getComplaintReferanceNo());
+					complaintDto.setComplaintMode(complaintModel.getComplaintMode());
 					complaintDtos.add(complaintDto);
 				}
 			}else {
@@ -437,6 +452,8 @@ public class ComplaintServiceImpl implements ComplaintService{
 			complaintDto.setComplaintType(complaintModel.getComplaintType());
 			complaintDto.setComplaintSubject(complaintModel.getComplaintSubject());
 			complaintDto.setComplaintStatus(complaintModel.getComplaintStatus());
+			complaintDto.setComplaintReferanceNo(complaintModel.getComplaintReferanceNo());
+			complaintDto.setComplaintMode(complaintModel.getComplaintMode());
 			
 			CustomerModel customerModel=complaintModel.getCustomer();
 			CustomerDto customerDto=new CustomerDto();
